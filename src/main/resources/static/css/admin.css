@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+/* @author alatai */
+
+.bread-control {
+    margin-top: 15px;
+}
+
+.page-nav {
+    width: 200px;
+    margin: 0 auto;
+}
+
+.add-button {
+    height: 38px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.image-table {
+    margin-top: 20px;
+}
+
+.image-input {
+    margin: 0 20px;
+}
+
+.property-edit {
+    margin: 0 auto 10px;
+}
+
+.property-confirm {
+    display: block;
+    margin: 20px auto 0;
+}
+
+.item-table {
+    margin: 0 auto;
+    display: none;
+}

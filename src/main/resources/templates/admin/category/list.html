@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/admin/header::header('分類管理')">
+</head>
+<body>
+
+<script>
+    $(function () {
+        let vm = new Vue({
+            el: '#categories',
+            data: {
+                url: 'data/categories',
+                pageResult: {},
+                category: {
+                    id: null,
+                    name: ''
+                }
+            },
+            // 在模板渲染成html后调用
+            // 通常是初始化页面完成后，再对html的dom节点进行操作
+            mounted: function () {
+                this.list(0);
+            },
+            methods: {
+                // 加载数据
+                list: function (start) {
+                    axios.get(this.url, {
+                        params: {
+                            start: start
+                        }
+                    }).then((response) => {
+                        vm.pageResult = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 控制跳转页面
+                goPage: function (num) {
+                    if (num !== vm.pageResult.number) {
+                        this.list(num);
+                    }
+                },
+                // 打开编辑模态框
+                openEditModal: function (category) {
+                    if (category) {
+                        this.category = category;
+                    }
+
+                    $('#editModal').modal();
+                },
+                // 新增/更新数据
+                addOrUpdate: function () {
+                    let formData = new FormData();
+                    formData.append('name', this.category.name);
+
+                    // 更新
+                    if (this.category.id) {
+                        formData.append('id', this.category.id);
+
+                        axios.put(this.url, formData).then(() => {
+                            this.afterEdit();
+                        });
+                    } else { // 新增
+                        axios.post(this.url, formData).then(() => {
+                            this.afterEdit();
+                        });
+                    }
+                },
+                // 新增/更新后执行
+                afterEdit: function () {
+                    $('#editModal').modal('hide');
+                    vm.list(0);
+                    vm.category = {
+                        id: null,
+                        name: ''
+                    };
+                },
+                // 打开删除模态框
+                openDeleteModal: function (id) {
+                    this.category.id = id;
+                    $('#deleteCategory').modal();
+                },
+                // 删除数据
+                remove: function () {
+                    axios.delete(this.url + "/" + this.category.id).then(() => {
+                        $('#deleteCategory').modal('hide');
+                        vm.list(0);
+                    });
+                },
+            }
+        });
+    });
+</script>
+
+<div id="categories">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- list -->
+    <div class="container">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <div class="row">
+                    <ol class="breadcrumb col-11">
+                        <li class="breadcrumb-item"><a href="javascript:">サイト管理</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">商品分類</li>
+                    </ol>
+                    <button type="button" class="btn btn-primary add-button" @click="openEditModal()">追加
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <div>
+            <input id="deleteUrl" type="hidden">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">分類名称</th>
+                    <th scope="col">属性管理</th>
+                    <th scope="col">商品管理</th>
+                    <th scope="col">編集</th>
+                    <th scope="col">削除</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="category in pageResult.content">
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td><a href="/jishop/admin/property/list?cid=${category.id}"><i class="fas fa-tasks"></i></a></td>
+                    <td>
+                        <a href="/jishop/admin/product/list?cid=${category.id}"><i class="fas fa-shopping-cart"></i></a>
+                    </td>
+                    <td>
+                        <a href="javascript:" @click="openEditModal(category)">
+                            <input id="categoryName${category.id}" value="${category.name}" type="hidden">
+                            <i class="fas fa-edit" data-toggle="modal" data-target="#editCotegory"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:" @click="openDeleteModal(category.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- pageNav -->
+    <div th:replace="common/admin/pagenav::pagenav"></div>
+    <!-- edit modal -->
+    <div th:replace="admin/category/edit::edit"></div>
+    <!-- delete modal -->
+    <div th:replace="admin/category/delete::delete"></div>
+</div>
+
+</body>
+</html>
