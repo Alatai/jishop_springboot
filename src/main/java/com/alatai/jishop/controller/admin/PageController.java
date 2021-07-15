@@ -15,8 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class PageController {
 
+    /**
+     * 管理首页
+     */
+    @GetMapping
+    public String admin() {
+        return "redirect:/admin/categories";
+    }
+
+    /**
+     * 分类页
+     */
     @GetMapping("/categories")
     public String listCategories() {
         return "admin/category/list";
+    }
+
+    /**
+     * 属性页
+     */
+    @GetMapping("/properties")
+    public String listProperty() {
+        return "admin/property/list";
     }
 }

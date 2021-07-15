@@ -27,7 +27,7 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
-    public void add(Category category) {
+    public void add(@RequestBody Category category) {
         categoryService.insert(category);
     }
 
@@ -37,7 +37,7 @@ public class CategoryController {
     }
 
     @PutMapping("/categories")
-    public void update(Category category) {
+    public void update(@RequestBody Category category) {
         categoryService.update(category);
     }
 }

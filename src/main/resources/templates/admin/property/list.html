@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/admin/header::header('分類管理')">
+<head th:replace="common/admin/header::header('属性管理')">
 </head>
 <body>
 
 <script type="text/javascript">
     $(() => {
+        let cid = getUrlParams('cid');
+
         let vm = new Vue({
-            el: '#categories',
+            el: '#properties',
             data: {
-                url: 'data/categories',
+                url: 'data/',
                 pageResult: {},
+                property: {
+                    id: null,
+                    name: '',
+                    category: {
+                        id: null,
+                        name: ''
+                    }
+                },
                 category: {
                     id: null,
                     name: ''
                 }
             },
-            // 在模板渲染成html后调用
-            // 通常是初始化页面完成后，再对html的dom节点进行操作
             mounted: function () {
                 this.list(0);
             },
             methods: {
-                // 加载数据
                 list: function (start) {
-                    axios.get(this.url, {
+                    let url = this.url + 'categories/' + cid + '/properties';
+                    axios.get(url, {
                         params: {
                             start: start
                         }
                     }).then((response) => {
                         vm.pageResult = response.data;
+                        vm.category = response.data.content[0].category;
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -41,22 +50,24 @@
                     }
                 },
                 // 打开编辑模态框
-                openEditModal: function (category) {
-                    if (category) {
-                        this.category = category;
+                openEditModal: function (property) {
+                    if (property) {
+                        this.property = property;
                     }
 
                     $('#editModal').modal();
                 },
                 // 新增/更新数据
                 addOrUpdate: function () {
+                    this.property.category = this.category;
+
                     // 更新
-                    if (this.category.id) {
-                        axios.put(this.url, this.category).then(() => {
+                    if (this.property.id) {
+                        axios.put(this.url + 'properties', this.property).then(() => {
                             this.afterEdit();
                         });
                     } else { // 新增
-                        axios.post(this.url, this.category).then(() => {
+                        axios.post(this.url + 'properties', this.property).then(() => {
                             this.afterEdit();
                         });
                     }
@@ -65,19 +76,23 @@
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
-                    vm.category = {
+                    vm.property = {
                         id: null,
-                        name: ''
+                        name: '',
+                        category: {
+                            id: null,
+                            name: ''
+                        }
                     };
                 },
                 // 打开删除模态框
                 openDeleteModal: function (id) {
-                    this.category.id = id;
+                    this.property.id = id;
                     $('#deleteModal').modal();
                 },
                 // 删除数据
                 remove: function () {
-                    axios.delete(this.url + "/" + this.category.id).then(() => {
+                    axios.delete(this.url + 'properties/' + this.property.id).then(() => {
                         $('#deleteModal').modal('hide');
                         vm.list(0);
                     });
@@ -87,7 +102,7 @@
     });
 </script>
 
-<div id="categories">
+<div id="properties">
     <!-- nav -->
     <div th:replace="common/admin/navbar::nav"></div>
 
@@ -97,10 +112,14 @@
             <nav aria-label="breadcrumb">
                 <div class="row">
                     <ol class="breadcrumb col-11">
-                        <li class="breadcrumb-item"><a href="javascript:">サイト管理</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">商品分類</li>
+                        <li class="breadcrumb-item"><a href="javascript:">すべての分類</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="list?cid=${category.id}">{{ category.name }}</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">属性</li>
                     </ol>
-                    <button type="button" class="btn btn-primary add-button" @click="openEditModal()">追加
+                    <button type="button" class="btn btn-primary add-button"
+                            @click="openEditModal()">追加
                     </button>
                 </div>
             </nav>
@@ -112,34 +131,22 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">分類名称</th>
-                    <th scope="col">属性管理</th>
-                    <th scope="col">商品管理</th>
+                    <th scope="col">属性名称</th>
                     <th scope="col">編集</th>
                     <th scope="col">削除</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="category in pageResult.content">
-                    <td>{{ category.id }}</td>
-                    <td>{{ category.name }}</td>
+                <tr v-for="property in pageResult.content">
+                    <td>{{ property.id }}</td>
+                    <td>{{ property.name }}</td>
                     <td>
-                        <a :href="'/jishop/admin/properties?cid=' + category.id">
-                            <i class="fas fa-tasks"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/jishop/admin/product/list?cid=${category.id}">
-                            <i class="fas fa-shopping-cart"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="javascript:" @click="openEditModal(category)">
+                        <a href="javascript:" @click="openEditModal(property)">
                             <i class="fas fa-edit" data-toggle="modal" data-target="#editModal"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:" @click="openDeleteModal(category.id)">
+                        <a href="javascript:" @click="openDeleteModal(property.id)">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
@@ -152,9 +159,9 @@
     <!-- pageNav -->
     <div th:replace="common/admin/pagenav::pagenav"></div>
     <!-- edit modal -->
-    <div th:replace="admin/category/edit::edit"></div>
+    <div th:replace="admin/property/edit::edit"></div>
     <!-- delete modal -->
-    <div th:replace="admin/category/delete::delete"></div>
+    <div th:replace="admin/property/delete::delete"></div>
 </div>
 
 </body>
