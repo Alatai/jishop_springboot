@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:replace="common/admin/header::header('属性管理')">
 </head>
 <body>
@@ -13,18 +13,8 @@
             data: {
                 url: 'data/',
                 pageResult: {},
-                property: {
-                    id: null,
-                    name: '',
-                    category: {
-                        id: null,
-                        name: ''
-                    }
-                },
-                category: {
-                    id: null,
-                    name: ''
-                }
+                property: {},
+                category: {}
             },
             mounted: function () {
                 this.list(0);
@@ -63,11 +53,13 @@
 
                     // 更新
                     if (this.property.id) {
-                        axios.put(this.url + 'properties', this.property).then(() => {
+                        axios.put(this.url + 'properties',
+                            this.property).then(() => {
                             this.afterEdit();
                         });
                     } else { // 新增
-                        axios.post(this.url + 'properties', this.property).then(() => {
+                        axios.post(this.url + 'properties',
+                            this.property).then(() => {
                             this.afterEdit();
                         });
                     }
@@ -76,14 +68,7 @@
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
-                    vm.property = {
-                        id: null,
-                        name: '',
-                        category: {
-                            id: null,
-                            name: ''
-                        }
-                    };
+                    vm.property = {};
                 },
                 // 打开删除模态框
                 openDeleteModal: function (id) {
@@ -92,7 +77,8 @@
                 },
                 // 删除数据
                 remove: function () {
-                    axios.delete(this.url + 'properties/' + this.property.id).then(() => {
+                    axios.delete(this.url + 'properties/' +
+                        this.property.id).then(() => {
                         $('#deleteModal').modal('hide');
                         vm.list(0);
                     });
@@ -119,7 +105,7 @@
                         <li class="breadcrumb-item active" aria-current="page">属性</li>
                     </ol>
                     <button type="button" class="btn btn-primary add-button"
-                            @click="openEditModal()">追加
+                            v-on:click="openEditModal()">追加
                     </button>
                 </div>
             </nav>
@@ -141,12 +127,12 @@
                     <td>{{ property.id }}</td>
                     <td>{{ property.name }}</td>
                     <td>
-                        <a href="javascript:" @click="openEditModal(property)">
+                        <a href="javascript:" v-on:click="openEditModal(property)">
                             <i class="fas fa-edit" data-toggle="modal" data-target="#editModal"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:" @click="openDeleteModal(property.id)">
+                        <a href="javascript:" v-on:click="openDeleteModal(property.id)">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>

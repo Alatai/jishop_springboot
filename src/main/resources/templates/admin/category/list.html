@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:replace="common/admin/header::header('分類管理')">
 </head>
 <body>
@@ -11,10 +11,7 @@
             data: {
                 url: 'data/categories',
                 pageResult: {},
-                category: {
-                    id: null,
-                    name: ''
-                }
+                category: {}
             },
             // 在模板渲染成html后调用
             // 通常是初始化页面完成后，再对html的dom节点进行操作
@@ -65,10 +62,7 @@
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
-                    vm.category = {
-                        id: null,
-                        name: ''
-                    };
+                    vm.category = {};
                 },
                 // 打开删除模态框
                 openDeleteModal: function (id) {
@@ -100,7 +94,7 @@
                         <li class="breadcrumb-item"><a href="javascript:">サイト管理</a></li>
                         <li class="breadcrumb-item active" aria-current="page">商品分類</li>
                     </ol>
-                    <button type="button" class="btn btn-primary add-button" @click="openEditModal()">追加
+                    <button type="button" class="btn btn-primary add-button" v-on:click="openEditModal()">追加
                     </button>
                 </div>
             </nav>
@@ -124,22 +118,22 @@
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
                     <td>
-                        <a :href="'/jishop/admin/properties?cid=' + category.id">
+                        <a :href="'properties?cid=' + category.id">
                             <i class="fas fa-tasks"></i>
                         </a>
                     </td>
                     <td>
-                        <a :href="'/jishop/admin/products?cid=' + category.id">
+                        <a :href="'products?cid=' + category.id">
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:" @click="openEditModal(category)">
+                        <a href="javascript:" v-on:click="openEditModal(category)">
                             <i class="fas fa-edit" data-toggle="modal" data-target="#editModal"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:" @click="openDeleteModal(category.id)">
+                        <a href="javascript:" v-on:click="openDeleteModal(category.id)">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>

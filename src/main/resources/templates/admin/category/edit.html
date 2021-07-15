@@ -1,6 +1,7 @@
 <div class="modal fade" id="editModal"
      tabindex="-1" aria-labelledby="editLabel" aria-hidden="true"
-     th:fragment="edit">
+     th:fragment="edit"
+     xmlns:v-on="http://www.w3.org/1999/xhtml">
     <input id="id" name="id" type="hidden">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -19,7 +20,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-                <button type="button" class="btn btn-primary" @click="addOrUpdate()">提出</button>
+                <button type="button" class="btn btn-primary"
+                        v-on:click="addOrUpdate()">提出
+                </button>
             </div>
         </div>
     </div>

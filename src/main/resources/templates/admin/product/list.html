@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:replace="common/admin/header::header('商品管理')">
 </head>
 <body>
@@ -13,23 +14,8 @@
             data: {
                 url: 'data/',
                 pageResult: {},
-                product: {
-                    id: null,
-                    name: '',
-                    subtitle: '',
-                    originalPrice: 0.0,
-                    promotePrice: 0.0,
-                    stock: 0,
-                    createdDate: '',
-                    category: {
-                        id: null,
-                        name: ''
-                    }
-                },
-                category: {
-                    id: null,
-                    name: ''
-                }
+                product: {},
+                category: {}
             },
             mounted: function () {
                 this.list(0);
@@ -68,11 +54,13 @@
 
                     // 更新
                     if (this.product.id) {
-                        axios.put(this.url + 'products', this.product).then(() => {
+                        axios.put(this.url + 'products',
+                            this.product).then(() => {
                             this.afterEdit();
                         });
                     } else { // 新增
-                        axios.post(this.url + 'products', this.product).then(() => {
+                        axios.post(this.url + 'products',
+                            this.product).then(() => {
                             this.afterEdit();
                         });
                     }
@@ -81,19 +69,7 @@
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
-                    vm.property = {
-                        id: null,
-                        name: '',
-                        subtitle: '',
-                        originalPrice: 0.0,
-                        promotePrice: 0.0,
-                        stock: 0,
-                        createdDate: '',
-                        category: {
-                            id: null,
-                            name: ''
-                        }
-                    };
+                    vm.property = {};
                 },
                 // 打开删除模态框
                 openDeleteModal: function (id) {
@@ -102,7 +78,8 @@
                 },
                 // 删除数据
                 remove: function () {
-                    axios.delete(this.url + 'products/' + this.product.id).then(() => {
+                    axios.delete(this.url + 'products/' +
+                        this.product.id).then(() => {
                         $('#deleteModal').modal('hide');
                         vm.list(0);
                     });
@@ -123,10 +100,10 @@
                 <div class="row">
                     <ol class="breadcrumb col-11">
                         <li class="breadcrumb-item"><a href="javascript:">すべての分類</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:">${category.name}</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:">{{ category.name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">商品</li>
                     </ol>
-                    <button type="button" class="btn btn-primary add-button" @click="openEditModal()">追加
+                    <button type="button" class="btn btn-primary add-button" v-on:click="openEditModal()">追加
                     </button>
                 </div>
             </nav>
@@ -155,7 +132,7 @@
                     <td>{{ product.id }}</td>
                     <td>
                         <img style="width: 50px;"
-                             src=""
+                             :src="'../img/single/' + product.firstImage.name"
                              alt="暂无图片">
                     </td>
                     <td>{{ product.name }}</td>
@@ -163,15 +140,15 @@
                     <td>{{ product.originalPrice }}</td>
                     <td>{{ product.promotePrice }}</td>
                     <td>{{ product.stock }}</td>
-                    <td><a href="/jishop/admin/image/list?pid=${product.id}"><i class="fas fa-images"></i></a></td>
+                    <td><a :href="'images?pid=' + product.id"><i class="fas fa-images"></i></a></td>
                     <td><a href="/jishop/admin/pvalue/edit?pid=${product.id}"><i class="fas fa-tasks"></i></a></td>
                     <td>
-                        <a href="javascript:" @click="openEditModal(product)">
+                        <a href="javascript:" v-on:click="openEditModal(product)">
                             <i class="fas fa-edit" data-toggle="modal"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:" @click="openDeleteModal(product.id)">
+                        <a href="javascript:" v-on:click="openDeleteModal(product.id)">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>

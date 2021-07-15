@@ -46,4 +46,12 @@ public class PageController {
     public String listProducts() {
         return "admin/product/list";
     }
+
+    /**
+     * 商品图片页
+     */
+    @GetMapping("/images")
+    public String listProductImages() {
+        return "admin/image/list";
+    }
 }

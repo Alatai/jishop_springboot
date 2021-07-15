@@ -23,8 +23,10 @@ public class ProductController {
                                     @RequestParam(value = "start", defaultValue = "0") int start,
                                     @RequestParam(value = "size", defaultValue = "5") int size) {
         start = start < 0 ? 0 : start;
+        PageResult<Product> pageResult = productService.findAll(cid, start, size, 5);
+        productService.loadFirstImage(pageResult.getContent());
 
-        return productService.findAll(cid, start, size, 5);
+        return pageResult;
     }
 
     @PostMapping("/products")

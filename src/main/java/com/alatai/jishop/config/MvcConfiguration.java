@@ -20,6 +20,8 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/static/img/");
     }
 
     /**

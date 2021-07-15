@@ -23,4 +23,6 @@ public interface ProductService {
     Product update(Product product);
 
     void deleteById(int id);
+
+    void loadFirstImage(List<Product> products);
 }

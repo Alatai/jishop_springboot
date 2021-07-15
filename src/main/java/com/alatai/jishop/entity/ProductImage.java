@@ -1,5 +1,6 @@
 package com.alatai.jishop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,23 +9,25 @@ import java.io.Serializable;
 /**
  * @author Alatai
  * @version 1.0
- * @date 2021/07/15 9:34
+ * @date 2021/07/15 14:33
  */
 @Entity
-@Table(name = "Property")
+@Table(name = "ProductImage")
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
-public class Property implements Serializable {
+public class ProductImage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
+
+    private String type;
 
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "cid")
-    private Category category;
+    @JoinColumn(name="pid")
+    // @JsonBackReference // 避免双向引用导致的无限递归
+    private Product product;
 
     public Integer getId() {
         return id;
@@ -32,6 +35,14 @@ public class Property implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -42,11 +53,12 @@ public class Property implements Serializable {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setProduct(Product product) {
+        this.product = product;
     }
+
 }

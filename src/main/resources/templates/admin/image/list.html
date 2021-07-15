@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/admin/header::header('商品图片管理')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let pid = getUrlParams('pid');
+
+        let vm = new Vue({
+            el: '#productImages',
+            data: {
+                url: 'data/',
+                singleProductImages: [],
+                detailProductImages: [],
+                product: {},
+                category: {},
+                imageFile: '',
+                removeId: null
+            },
+            mounted: function () {
+                this.listSingleType();
+                this.listDetailType();
+            },
+            methods: {
+                // 加载商品图片
+                listSingleType: function () {
+                    let url = this.url + 'products/' + pid + '/images';
+                    axios.get(url, {
+                        params: {
+                            type: 'type_single'
+                        }
+                    }).then((response) => {
+                        vm.singleProductImages = response.data;
+                        if (response.data.length > 0) {
+                            vm.product = response.data[0].product;
+                            vm.category = response.data[0].product.category;
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 加载商品详情图片
+                listDetailType: function () {
+                    let url = this.url + 'products/' + pid + '/images';
+                    axios.get(url, {
+                        params: {
+                            type: 'type_detail'
+                        }
+                    }).then((response) => {
+                        vm.detailProductImages = response.data;
+                        if (response.data.length > 0) {
+                            vm.product = response.data[0].product;
+                            vm.category = response.data[0].product.category;
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 新增商品/商品详情图片
+                add: function (type) {
+                    let formData = new FormData();
+
+                    if (type === 'type_single') {
+                        formData.append('type', 'type_single');
+                    } else {
+                        formData.append('type', 'type_detail');
+                    }
+
+                    formData.append('pid', pid);
+                    formData.append('image', this.imageFile);
+
+                    axios.post(this.url + 'images', formData).then(() => {
+                        this.listSingleType();
+                        this.listDetailType();
+                        vm.imageFile = {};
+                    });
+                },
+                // 绑定上传文件到vue
+                bandImageFile: function (event) {
+                    this.imageFile = event.target.files[0];
+                },
+                openDeleteModal: function (id) {
+                    this.removeId = id;
+                    $('#deleteModal').modal();
+                },
+                remove: function () {
+                    axios.delete(this.url + 'images/' + this.removeId).then(() => {
+                        $('#deleteModal').modal('hide');
+                        this.listSingleType();
+                        this.listDetailType();
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div id="productImages">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- list -->
+    <div class="container">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:">すべての分類</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="/jishop/admin/product/list?cid=${category.id}">{{ category.name }}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="javascript:">
+                            {{ product.name }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">商品写真管理</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="card col" style="width: 18rem;">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title">商品写真</h5>
+                        <p class="card-text">商品の写真（normal size）</p>
+                        <input type="file" name="image" v-on:change="bandImageFile($event)">
+                        <button type="button" class="btn btn-primary" v-on:click="add('type_single')">提出</button>
+                    </div>
+
+                    <div class="image-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">商品写真</th>
+                                <th scope="col">削除</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="singleProductImage in singleProductImages">
+                                <td>{{ singleProductImage.id }}</td>
+                                <td>
+                                    <a :href="'../img/single/' + singleProductImage.name">
+                                        <img height="50px" :src="'../img/single/' + singleProductImage.name" alt="暂无图片">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:" v-on:click="openDeleteModal(singleProductImage.id)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col" style="width: 18rem;">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title">商品紹介</h5>
+                        <p class="card-text">商品を紹介するための写真（large size）</p>
+                        <input type="file" name="image" v-on:change="bandImageFile($event)">
+                        <button type="button" class="btn btn-primary" v-on:click="add('type_detail')">提出</button>
+                    </div>
+
+
+                    <div class="image-table">
+                        <input id="deleteUrl" type="hidden">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">商品宣伝写真</th>
+                                <th scope="col">削除</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="detailProductImage in detailProductImages">
+                                <td>{{ detailProductImage.id }}</td>
+                                <td>
+                                    <a :href="'../img/detail/' + detailProductImage.name">
+                                        <img height="50px" :src="'../img/detail/' + detailProductImage.name" alt="暂无图片">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:" v-on:click="openDeleteModal(detailProductImage.id)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete modal -->
+    <div th:replace="admin/image/delete::delete"></div>
+</div>
+
+</body>
+</html>
