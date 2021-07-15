@@ -54,4 +54,9 @@ public class PageController {
     public String listProductImages() {
         return "admin/image/list";
     }
+
+    @GetMapping("/pvalues")
+    public String listPropertyValues() {
+        return "admin/pvalue/edit";
+    }
 }

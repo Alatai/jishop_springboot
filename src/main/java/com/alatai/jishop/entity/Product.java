@@ -36,7 +36,7 @@ public class Product implements Serializable {
     @JoinColumn(name="cid")
     private Category category;
 
-    @Transient
+    @Transient // 不存到数据库中，仅做临时变量
     private ProductImage firstImage;
 
     public Integer getId() {
@@ -109,5 +109,20 @@ public class Product implements Serializable {
 
     public void setFirstImage(ProductImage firstImage) {
         this.firstImage = firstImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", promotePrice=" + promotePrice +
+                ", stock=" + stock +
+                ", createdDate=" + createdDate +
+                ", category=" + category +
+                ", firstImage=" + firstImage +
+                '}';
     }
 }

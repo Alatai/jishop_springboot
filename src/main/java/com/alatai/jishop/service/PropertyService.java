@@ -1,5 +1,6 @@
 package com.alatai.jishop.service;
 
+import com.alatai.jishop.entity.Category;
 import com.alatai.jishop.entity.Property;
 import com.alatai.jishop.util.PageResult;
 
@@ -15,6 +16,8 @@ public interface PropertyService {
     List<Property> findAll();
 
     PageResult<Property> findAll(int cid, int start, int size, int displayPages);
+
+    List<Property> findByCategory(Category category);
 
     Property findById(int id);
 

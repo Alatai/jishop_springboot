@@ -141,7 +141,7 @@
                     <td>{{ product.promotePrice }}</td>
                     <td>{{ product.stock }}</td>
                     <td><a :href="'images?pid=' + product.id"><i class="fas fa-images"></i></a></td>
-                    <td><a href="/jishop/admin/pvalue/edit?pid=${product.id}"><i class="fas fa-tasks"></i></a></td>
+                    <td><a :href="'pvalues?pid=' + product.id"><i class="fas fa-tasks"></i></a></td>
                     <td>
                         <a href="javascript:" v-on:click="openEditModal(product)">
                             <i class="fas fa-edit" data-toggle="modal"></i>

@@ -42,6 +42,11 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public List<Property> findByCategory(Category category) {
+        return propertyDao.findByCategory(category);
+    }
+
+    @Override
     public Property findById(int id) {
         return propertyDao.getById(id);
     }

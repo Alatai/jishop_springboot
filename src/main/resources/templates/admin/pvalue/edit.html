@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/admin/header::header('属性值管理')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let pid = getUrlParams('pid');
+
+        let vm = new Vue({
+            el: '#propertyValues',
+            data: {
+                url: 'data/',
+                propertyValues: [],
+                product: {},
+                category: {}
+            },
+            mounted: function () {
+                this.list();
+            },
+            methods: {
+                list: function () {
+                    let url = this.url + 'products/' + pid + '/pvalues';
+
+                    axios.get(url).then((response) => {
+                        vm.propertyValues = response.data;
+                        vm.product = response.data[0].product;
+                        vm.category = response.data[0].product.category;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 更新
+                update: function (propertyValues) {
+                    axios.post(this.url + '/pvalues',
+                        propertyValues).then((response) => {
+                        if (response.data === 'success') {
+                            $('#confirmModal').modal();
+                        }
+                    });
+                },
+                // 关闭确认模态框
+                closeConfirmModal: function () {
+                    $('#confirmModal').modal('hide');
+                }
+            }
+        });
+    });
+</script>
+
+<div id="propertyValues">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- edit -->
+    <div class="container">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">すべての分類</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ category.name }}</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ product.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">属性</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div>
+            <div class="input-group col-6 property-edit" v-for="propertyValue in propertyValues">
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{ propertyValue.property.name }}</span>
+                </div>
+                <input class="form-control" type="text" aria-label="First name"
+                       name="value" v-model="propertyValue.value">
+
+            </div>
+            <button type="button" class="btn btn-primary property-confirm"
+                    v-on:click="update(propertyValues)">確認
+            </button>
+        </div>
+    </div>
+
+    <!-- success -->
+    <div th:replace="admin/pvalue/success::success"></div>
+</div>
+
+</body>
+</html>
