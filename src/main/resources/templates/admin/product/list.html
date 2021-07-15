@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/admin/header::header('商品管理')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let cid = getUrlParams('cid');
+
+        let vm = new Vue({
+            el: '#products',
+            data: {
+                url: 'data/',
+                pageResult: {},
+                product: {
+                    id: null,
+                    name: '',
+                    subtitle: '',
+                    originalPrice: 0.0,
+                    promotePrice: 0.0,
+                    stock: 0,
+                    createdDate: '',
+                    category: {
+                        id: null,
+                        name: ''
+                    }
+                },
+                category: {
+                    id: null,
+                    name: ''
+                }
+            },
+            mounted: function () {
+                this.list(0);
+            },
+            methods: {
+                list: function (start) {
+                    let url = this.url + 'categories/' + cid + '/products';
+                    axios.get(url, {
+                        params: {
+                            start: start
+                        }
+                    }).then((response) => {
+                        vm.pageResult = response.data;
+                        vm.category = response.data.content[0].category;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 控制跳转页面
+                goPage: function (num) {
+                    if (num !== vm.pageResult.number) {
+                        this.list(num);
+                    }
+                },
+                // 打开编辑模态框
+                openEditModal: function (product) {
+                    if (product) {
+                        this.product = product;
+                    }
+
+                    $('#editModal').modal();
+                },
+                // 新增/更新数据
+                addOrUpdate: function () {
+                    this.product.category = this.category;
+
+                    // 更新
+                    if (this.product.id) {
+                        axios.put(this.url + 'products', this.product).then(() => {
+                            this.afterEdit();
+                        });
+                    } else { // 新增
+                        axios.post(this.url + 'products', this.product).then(() => {
+                            this.afterEdit();
+                        });
+                    }
+                },
+                // 新增/更新后执行
+                afterEdit: function () {
+                    $('#editModal').modal('hide');
+                    vm.list(0);
+                    vm.property = {
+                        id: null,
+                        name: '',
+                        subtitle: '',
+                        originalPrice: 0.0,
+                        promotePrice: 0.0,
+                        stock: 0,
+                        createdDate: '',
+                        category: {
+                            id: null,
+                            name: ''
+                        }
+                    };
+                },
+                // 打开删除模态框
+                openDeleteModal: function (id) {
+                    this.product.id = id;
+                    $('#deleteModal').modal();
+                },
+                // 删除数据
+                remove: function () {
+                    axios.delete(this.url + 'products/' + this.product.id).then(() => {
+                        $('#deleteModal').modal('hide');
+                        vm.list(0);
+                    });
+                },
+            }
+        });
+    });
+</script>
+
+<div id="products">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- list -->
+    <div class="container">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <div class="row">
+                    <ol class="breadcrumb col-11">
+                        <li class="breadcrumb-item"><a href="javascript:">すべての分類</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:">${category.name}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">商品</li>
+                    </ol>
+                    <button type="button" class="btn btn-primary add-button" @click="openEditModal()">追加
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <div>
+            <input id="deleteUrl" type="hidden">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">写真</th>
+                    <th scope="col">商品名称</th>
+                    <th scope="col">サブタイトル</th>
+                    <th scope="col">原価</th>
+                    <th scope="col">今の値段</th>
+                    <th scope="col">在庫数</th>
+                    <th scope="col">写真管理</th>
+                    <th scope="col">属性設定</th>
+                    <th scope="col">編集</th>
+                    <th scope="col">削除</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="product in pageResult.content">
+                    <td>{{ product.id }}</td>
+                    <td>
+                        <img style="width: 50px;"
+                             src=""
+                             alt="暂无图片">
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.subtitle }}</td>
+                    <td>{{ product.originalPrice }}</td>
+                    <td>{{ product.promotePrice }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td><a href="/jishop/admin/image/list?pid=${product.id}"><i class="fas fa-images"></i></a></td>
+                    <td><a href="/jishop/admin/pvalue/edit?pid=${product.id}"><i class="fas fa-tasks"></i></a></td>
+                    <td>
+                        <a href="javascript:" @click="openEditModal(product)">
+                            <i class="fas fa-edit" data-toggle="modal"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:" @click="openDeleteModal(product.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- pageNav -->
+    <div th:replace="common/admin/pagenav::pagenav"></div>
+    <!-- edit modal -->
+    <div th:replace="admin/product/edit::edit"></div>
+    <!-- delete modal -->
+    <div th:replace="admin/product/delete::delete"></div>
+</div>
+
+</body>
+</html>

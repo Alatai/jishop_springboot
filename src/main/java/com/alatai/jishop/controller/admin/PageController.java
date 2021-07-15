@@ -35,7 +35,15 @@ public class PageController {
      * 属性页
      */
     @GetMapping("/properties")
-    public String listProperty() {
+    public String listProperties() {
         return "admin/property/list";
+    }
+
+    /**
+     * 商品页
+     */
+    @GetMapping("/products")
+    public String listProducts() {
+        return "admin/product/list";
     }
 }
