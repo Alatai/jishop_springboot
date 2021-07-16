@@ -5,17 +5,19 @@
             JI SHOP ホーム
         </a>
 
-<!--        <span></span>-->
-<!--        <a href="javascript:">こんにちは、${Session["user"].name}</a>-->
-<!--        <a href="http://localhost:8080/jishop/user/logout">ログアウト</a>-->
+        <span th:if="${session.user != null}">
+            <a href="javascript:" th:text="|こんにちは、${session.user.name}|"></a>
+            <a href="http://localhost:8080/jishop/logout">ログアウト</a>
+        </span>
 
-        <span></span>
-        <a href="http://localhost:8080/jishop/user/login">ログイン</a>
-        <a href="http://localhost:8080/jishop/user/register">新規登録</a>
+        <span th:if="${session.user == null}">
+            <a href="http://localhost:8080/jishop/register">新規登録</a>
+            <a href="http://localhost:8080/jishop/login">ログイン</a>
+        </span>
 
         <span class="float-right">
-            <a href="http://localhost:8080/jishop/order/orders">注文履歴</a>
-            <a href="http://localhost:8080/jishop/order/cart">
+            <a href="http://localhost:8080/jishop/orders">注文履歴</a>
+            <a href="http://localhost:8080/jishop/orders/cart">
                 <i class="fas fa-shopping-cart"></i>
                 <span>
                     カート <strong id="cartNum">${Session["cartNum"]}</strong> 件

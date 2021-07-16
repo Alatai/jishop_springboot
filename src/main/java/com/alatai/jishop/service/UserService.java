@@ -23,4 +23,10 @@ public interface UserService {
     User update(User user);
 
     void deleteById(Integer id);
+
+    boolean isExist(String name);
+
+    User findByName(String name);
+
+    void register(User user);
 }

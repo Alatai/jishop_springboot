@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('login')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let vm = new Vue({
+            el: '#login',
+            data: {
+                url: 'data/login',
+                user: {}
+            },
+            methods: {
+                login: function () {
+                    axios.post(this.url, this.user).then((response) => {
+                        if (response.data === 'success') {
+                            window.location.href = 'index';
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div id="login">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <div class="ji-login">
+        <div class="jil-panel">
+            <form>
+                <!--<div class="red-color">${msg}</div>-->
+
+                <div style="text-align: center;">ユーザ登録</div>
+
+                <div>
+                    <label for="name"><i class="fas fa-user"></i></label>
+                    <input id="name" name="name" type="text"
+                           placeholder="ユーザネーム" required v-model="user.name">
+                </div>
+
+                <div>
+                    <label for="password"><i class="fas fa-unlock-alt"></i></label>
+                    <input id="password" name="password" type="text"
+                           placeholder="パスワード" required v-model="user.password">
+                </div>
+
+                <div>
+                    <a class="jil-tip" href="javascript:">パスワード忘れ</a>
+                    <a class="jil-tip float-right" href="javascript:">無料登録</a>
+                </div>
+
+                <div>
+                    <button type="button" v-on:click="login()">登録</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

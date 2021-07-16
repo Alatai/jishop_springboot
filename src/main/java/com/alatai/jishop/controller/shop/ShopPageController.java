@@ -1,5 +1,7 @@
 package com.alatai.jishop.controller.shop;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,8 +15,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller("shopPageController")
 public class ShopPageController {
 
+    /**
+     * 首页
+     */
     @GetMapping("/index")
     public String index() {
         return "shop/home/index";
+    }
+
+    /**
+     * 注册页面
+     */
+    @GetMapping("/register")
+    public String register() {
+        return "shop/user/register";
+    }
+
+    /**
+     * 登录页面
+     */
+    @GetMapping("/login")
+    public String login() {
+        return "shop/user/login";
+    }
+
+    /**
+     * 退出登录，跳转到首页
+     */
+    @GetMapping("/logout")
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+
+        if (subject.isAuthenticated()) {
+            subject.logout();
+        }
+
+        return "redirect:/index";
     }
 }

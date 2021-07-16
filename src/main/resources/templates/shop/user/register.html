@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('register')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        $(function () {
+            $('#registerForm').validate({
+                rules: {
+                    passwordConfirm: {
+                        equalTo: '#password'
+                    }
+                }
+            });
+        });
+
+        let vm = new Vue({
+            el: '#register',
+            data: {
+                url: 'data/register',
+                user: {}
+            },
+            methods: {
+                register: function () {
+                    axios.post(this.url, this.user).then((response) => {
+                        if (response.data === 'success') {
+                            window.location.href = 'login';
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div id="register">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- register -->
+    <div class="ji-register">
+        <div>
+            <form id="registerForm">
+                <div style="margin-top: 50px" class="jir-msg">
+                    ユーザネーム設定
+                </div>
+                <div>
+                    <label for="name">ユーザネーム</label>
+                    <input id="name" name="name" type="text" placeholder="ユーザネーム変更できない"
+                           v-model="user.name" required>
+                </div>
+
+                <div class="jir-msg">
+                    <span>パスワード設定</span>
+                    <span>登録検査</span>
+                </div>
+
+                <div>
+                    <label for="password">パスワード</label>
+                    <input id="password" name="password" type="text" placeholder="パスワード"
+                           v-model="user.password" required>
+                </div>
+
+                <div>
+                    <label for="passwordConfirm">パスワード確認</label>
+                    <input id="passwordConfirm" name="passwordConfirm"
+                           type="text" placeholder="パスワード確認">
+                </div>
+
+                <div>
+                    <button type="button" v-on:click="register()">提　　出</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

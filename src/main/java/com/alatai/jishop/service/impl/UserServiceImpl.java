@@ -4,6 +4,8 @@ import com.alatai.jishop.dao.UserDao;
 import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.UserService;
 import com.alatai.jishop.util.PageResult;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,5 +56,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Integer id) {
         userDao.deleteById(id);
+    }
+
+    @Override
+    public boolean isExist(String name) {
+        return findByName(name) != null;
+    }
+
+    @Override
+    public User findByName(String name) {
+        return userDao.findByName(name);
+    }
+
+    @Override
+    public void register(User user) {
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        int times = 2;
+        String algorithm = "md5";
+
+        String encodedPassword = new SimpleHash(algorithm, user.getPassword(), salt, times).toString();
+
+        user.setSalt(salt);
+        user.setPassword(encodedPassword);
+
+        insert(user);
     }
 }
