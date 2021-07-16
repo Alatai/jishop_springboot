@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/admin/header::header('分類管理')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let vm = new Vue({
+            el: '#users',
+            data: {
+                url: 'data/users',
+                pageResult: {}
+            },
+            mounted: function () {
+                this.list(0);
+            },
+            methods: {
+                list: function (start) {
+                    axios.get(this.url, {
+                        params: {
+                            start: start
+                        }
+                    }).then((response) => {
+                        vm.pageResult = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 控制跳转页面
+                goPage: function (num) {
+                    if (num !== vm.pageResult.number) {
+                        this.list(num);
+                    }
+                },
+            }
+        });
+    });
+</script>
+
+<div id="users">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- list -->
+    <div class="container">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:">サイト管理</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">ユーザ管理</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div>
+            <input id="deleteUrl" type="hidden">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ユーザネーム</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="user in pageResult.content">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- pageNav -->
+    <div th:replace="common/admin/pagenav::pagenav"></div>
+</div>
+
+</body>
+</html>

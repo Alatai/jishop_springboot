@@ -55,8 +55,19 @@ public class PageController {
         return "admin/image/list";
     }
 
+    /**
+     * 属性值编辑页面
+     */
     @GetMapping("/pvalues")
     public String listPropertyValues() {
         return "admin/pvalue/edit";
+    }
+
+    /**
+     * 用户页面
+     */
+    @GetMapping("/users")
+    public String listUsers() {
+        return "admin/user/list";
     }
 }
