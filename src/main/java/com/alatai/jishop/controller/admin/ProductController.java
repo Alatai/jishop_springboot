@@ -19,8 +19,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/categories/{cid}/products")
-    public PageResult<Product> list(@PathVariable("cid") int cid,
-                                    @RequestParam(value = "start", defaultValue = "0") int start,
+    public PageResult<Product> list(@PathVariable("cid") Integer cid,
+                                    @RequestParam(value = "start", defaultValue = "0") Integer start,
                                     @RequestParam(value = "size", defaultValue = "5") int size) {
         start = start < 0 ? 0 : start;
         PageResult<Product> pageResult = productService.findAll(cid, start, size, 5);
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") Integer id) {
         productService.deleteById(id);
     }
 

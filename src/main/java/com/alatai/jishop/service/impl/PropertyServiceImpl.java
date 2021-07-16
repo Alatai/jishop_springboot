@@ -33,7 +33,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PageResult<Property> findAll(int cid, int start, int size, int displayPages) {
+    public PageResult<Property> findAll(Integer cid, Integer start, Integer size, Integer displayPages) {
         Category category = categoryService.findById(cid);
         Pageable pageable = PageRequest.of(start, size);
         Page<Property> page = propertyDao.findByCategory(category, pageable);
@@ -47,7 +47,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public Property findById(int id) {
+    public Property findById(Integer id) {
         return propertyDao.getById(id);
     }
 
@@ -62,7 +62,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         propertyDao.deleteById(id);
     }
 }

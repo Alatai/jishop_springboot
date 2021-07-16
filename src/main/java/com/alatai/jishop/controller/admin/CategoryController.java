@@ -19,8 +19,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/categories")
-    public PageResult<Category> list(@RequestParam(value = "start", defaultValue = "0") int start,
-                                     @RequestParam(value = "size", defaultValue = "5") int size) {
+    public PageResult<Category> list(@RequestParam(value = "start", defaultValue = "0") Integer start,
+                                     @RequestParam(value = "size", defaultValue = "5") Integer size) {
         start = start < 0 ? 0 : start;
 
         return categoryService.findAll(start, size, 5);
@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") Integer id) {
         categoryService.deleteById(id);
     }
 

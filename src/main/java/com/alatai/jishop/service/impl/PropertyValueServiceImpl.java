@@ -4,7 +4,6 @@ import com.alatai.jishop.dao.PropertyValueDao;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.Property;
 import com.alatai.jishop.entity.PropertyValue;
-import com.alatai.jishop.service.ProductService;
 import com.alatai.jishop.service.PropertyService;
 import com.alatai.jishop.service.PropertyValueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     }
 
     @Override
-    public PropertyValue findById(int id) {
+    public PropertyValue findById(Integer id) {
         return propertyValueDao.getById(id);
     }
 
@@ -56,7 +55,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         propertyValueDao.deleteById(id);
     }
 

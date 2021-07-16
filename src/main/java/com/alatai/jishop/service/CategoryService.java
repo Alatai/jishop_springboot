@@ -14,14 +14,14 @@ public interface CategoryService {
 
     List<Category> findAll();
 
-    PageResult<Category> findAll(int start, int size, int displayPages);
+    PageResult<Category> findAll(Integer start, Integer size, Integer displayPages);
 
-    Category findById(int id);
+    Category findById(Integer id);
 
     Category insert(Category category);
 
     Category update(Category category);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
 }

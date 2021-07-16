@@ -44,7 +44,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
 
     @Override
-    public ProductImage findById(int id) {
+    public ProductImage findById(Integer id) {
         return productImageDao.getById(id);
     }
 
@@ -59,12 +59,12 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         productImageDao.deleteById(id);
     }
 
     @Override
-    public void uploadAndInsert(int pid, String type, HttpServletRequest request, MultipartFile image) {
+    public void uploadAndInsert(Integer pid, String type, HttpServletRequest request, MultipartFile image) {
         Product product = productService.findById(pid);
         ProductImage productImage = new ProductImage();
         productImage.setProduct(product);

@@ -23,13 +23,13 @@ public interface ProductImageService {
 
     List<ProductImage> findDetailProductImages(Product product);
 
-    ProductImage findById(int id);
+    ProductImage findById(Integer id);
 
     ProductImage insert(ProductImage productImage);
 
     ProductImage update(ProductImage productImage);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
-    void uploadAndInsert(int pid, String type, HttpServletRequest request, MultipartFile image);
+    void uploadAndInsert(Integer pid, String type, HttpServletRequest request, MultipartFile image);
 }

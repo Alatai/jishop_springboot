@@ -16,14 +16,14 @@ public class PageResult<T> {
     private Page<T> page;
     // 显示页码数
     // e.g. 1 2 3 currentPage 5 6 7
-    private int displayPages;
-    private int[] displayNums;
+    private Integer displayPages;
+    private Integer[] displayNums;
 
-    private int totalPages; // 总页数
-    private int number; // 当前页码
+    private Integer totalPages; // 总页数
+    private Integer number; // 当前页码
     private long totalElements; // 总条数
-    private int size; // 当前页面大小
-    private int numberOfElements; // 当前页面查询条数
+    private Integer size; // 当前页面大小
+    private Integer numberOfElements; // 当前页面查询条数
     private List<T> content; // 查询结果集
     private boolean isFirst; // 是否为第一页
     private boolean isLast; // 是否为最后一页
@@ -33,7 +33,7 @@ public class PageResult<T> {
     public PageResult() {
     }
 
-    public PageResult(Page<T> page, int displayPages) {
+    public PageResult(Page<T> page, Integer displayPages) {
         this.page = page;
         this.displayPages = displayPages;
 
@@ -55,17 +55,17 @@ public class PageResult<T> {
      * 计算显示页码数
      */
     private void calcDisplayPages() {
-        int[] displayNums;
+        Integer[] displayNums;
 
         // 总页数 <= 需要显示的页数
         if (totalPages <= displayPages) {
-            displayNums = new int[totalPages];
+            displayNums = new Integer[totalPages];
 
             for (int i = 0; i < totalPages; i++) {
                 displayNums[i] = i + 1;
             }
         } else { // 总页数 > 需要显示的页数
-            displayNums = new int[displayPages];
+            displayNums = new Integer[displayPages];
             int start = number - displayPages / 2;
             int end = number + displayPages / 2;
 
@@ -97,35 +97,35 @@ public class PageResult<T> {
         this.page = page;
     }
 
-    public int getDisplayPages() {
+    public Integer getDisplayPages() {
         return displayPages;
     }
 
-    public void setDisplayPages(int displayPages) {
+    public void setDisplayPages(Integer displayPages) {
         this.displayPages = displayPages;
     }
 
-    public int[] getDisplayNums() {
+    public Integer[] getDisplayNums() {
         return displayNums;
     }
 
-    public void setDisplayNums(int[] displayNums) {
+    public void setDisplayNums(Integer[] displayNums) {
         this.displayNums = displayNums;
     }
 
-    public int getTotalPages() {
+    public Integer getTotalPages() {
         return totalPages;
     }
 
-    public void setTotalPages(int totalPages) {
+    public void setTotalPages(Integer totalPages) {
         this.totalPages = totalPages;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -137,19 +137,19 @@ public class PageResult<T> {
         this.totalElements = totalElements;
     }
 
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public int getNumberOfElements() {
+    public Integer getNumberOfElements() {
         return numberOfElements;
     }
 
-    public void setNumberOfElements(int numberOfElements) {
+    public void setNumberOfElements(Integer numberOfElements) {
         this.numberOfElements = numberOfElements;
     }
 

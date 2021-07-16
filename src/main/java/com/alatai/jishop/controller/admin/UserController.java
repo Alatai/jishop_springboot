@@ -22,8 +22,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public PageResult<User> list(@RequestParam(value = "start", defaultValue = "0") int start,
-                                 @RequestParam(value = "size", defaultValue = "5") int size) {
+    public PageResult<User> list(@RequestParam(value = "start", defaultValue = "0") Integer start,
+                                 @RequestParam(value = "size", defaultValue = "5") Integer size) {
         start = start < 0 ? 0 : start;
 
         return userService.findAll(start, size, 5);

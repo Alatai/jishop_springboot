@@ -14,15 +14,15 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    PageResult<Product> findAll(int cid, int start, int size, int displayPages);
+    PageResult<Product> findAll(Integer cid, Integer start, Integer size, Integer displayPages);
 
-    Product findById(int id);
+    Product findById(Integer id);
 
     Product insert(Product product);
 
     Product update(Product product);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
     void loadFirstImage(List<Product> products);
 }

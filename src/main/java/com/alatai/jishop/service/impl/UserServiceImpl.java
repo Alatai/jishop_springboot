@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResult<User> findAll(int start, int size, int displayPages) {
+    public PageResult<User> findAll(Integer start, Integer size, Integer displayPages) {
         Pageable pageable = PageRequest.of(start, size);
         Page<User> page = userDao.findAll(pageable);
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(Integer id) {
         return userDao.getById(id);
     }
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         userDao.deleteById(id);
     }
 }

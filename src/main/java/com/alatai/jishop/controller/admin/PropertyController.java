@@ -19,9 +19,9 @@ public class PropertyController {
     private PropertyService propertyService;
 
     @GetMapping("/categories/{cid}/properties")
-    public PageResult<Property> list(@PathVariable("cid") int cid,
-                                     @RequestParam(value = "start", defaultValue = "0") int start,
-                                     @RequestParam(value = "size", defaultValue = "5") int size) {
+    public PageResult<Property> list(@PathVariable("cid") Integer cid,
+                                     @RequestParam(value = "start", defaultValue = "0") Integer start,
+                                     @RequestParam(value = "size", defaultValue = "5") Integer size) {
         start = start < 0 ? 0 : start;
 
         return propertyService.findAll(cid, start, size, 5);
@@ -33,7 +33,7 @@ public class PropertyController {
     }
 
     @DeleteMapping("/properties/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") Integer id) {
         propertyService.deleteById(id);
     }
 

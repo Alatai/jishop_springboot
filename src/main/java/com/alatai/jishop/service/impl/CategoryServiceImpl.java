@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageResult<Category> findAll(int start, int size, int displayPages) {
+    public PageResult<Category> findAll(Integer start, Integer size, Integer displayPages) {
         Pageable pageable = PageRequest.of(start, size);
         Page<Category> page = categoryDao.findAll(pageable);
 
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(int id) {
+    public Category findById(Integer id) {
         return categoryDao.getById(id);
     }
 
@@ -52,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         categoryDao.deleteById(id);
     }
 }

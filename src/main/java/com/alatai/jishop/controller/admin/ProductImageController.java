@@ -26,7 +26,7 @@ public class ProductImageController {
     private ProductService productService;
 
     @GetMapping("/products/{pid}/images")
-    public List<ProductImage> list(@PathVariable("pid") int pid,
+    public List<ProductImage> list(@PathVariable("pid") Integer pid,
                                    @RequestParam("type") String type) {
         Product product = productService.findById(pid);
 
@@ -40,12 +40,12 @@ public class ProductImageController {
     }
 
     @PostMapping("/images")
-    public void add(int pid, String type, HttpServletRequest request, MultipartFile image) {
+    public void add(Integer pid, String type, HttpServletRequest request, MultipartFile image) {
         productImageService.uploadAndInsert(pid, type, request, image);
     }
 
     @DeleteMapping("/images/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") Integer id) {
         productImageService.deleteById(id);
     }
 

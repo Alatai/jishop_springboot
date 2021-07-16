@@ -15,7 +15,7 @@ public interface PropertyValueService {
 
     List<PropertyValue> findAll();
 
-    PropertyValue findById(int id);
+    PropertyValue findById(Integer id);
 
     List<PropertyValue> findByProduct(Product product);
 
@@ -25,7 +25,7 @@ public interface PropertyValueService {
 
     PropertyValue update(PropertyValue propertyValue);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
     void init(Product product);
 

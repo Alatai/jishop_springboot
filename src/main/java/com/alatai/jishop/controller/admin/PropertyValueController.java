@@ -24,7 +24,7 @@ public class PropertyValueController {
     private ProductService productService;
 
     @GetMapping("/products/{pid}/pvalues")
-    public List<PropertyValue> list(@PathVariable("pid") int pid) {
+    public List<PropertyValue> list(@PathVariable("pid") Integer pid) {
         Product product = productService.findById(pid);
         // 商品を基に属性値を初期化する
         propertyValueService.init(product);

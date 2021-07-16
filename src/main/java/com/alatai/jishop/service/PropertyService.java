@@ -15,16 +15,16 @@ public interface PropertyService {
 
     List<Property> findAll();
 
-    PageResult<Property> findAll(int cid, int start, int size, int displayPages);
+    PageResult<Property> findAll(Integer cid, Integer start, Integer size, Integer displayPages);
 
     List<Property> findByCategory(Category category);
 
-    Property findById(int id);
+    Property findById(Integer id);
 
     Property insert(Property property);
 
     Property update(Property property);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
 }

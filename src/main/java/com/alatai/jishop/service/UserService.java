@@ -14,13 +14,13 @@ public interface UserService {
 
     List<User> findAll();
 
-    PageResult<User> findAll(int start, int size, int displayPages);
+    PageResult<User> findAll(Integer start, Integer size, Integer displayPages);
 
-    User findById(int id);
+    User findById(Integer id);
 
     User insert(User user);
 
     User update(User user);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 }

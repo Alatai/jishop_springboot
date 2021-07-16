@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageResult<Product> findAll(int cid, int start, int size, int displayPages) {
+    public PageResult<Product> findAll(Integer cid, Integer start, Integer size, Integer displayPages) {
         Category category = categoryService.findById(cid);
         Pageable pageable = PageRequest.of(start, size);
         Page<Product> page = productDao.findByCategory(category, pageable);
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(Integer id) {
         return productDao.getById(id);
     }
 
@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         productDao.deleteById(id);
     }
 
