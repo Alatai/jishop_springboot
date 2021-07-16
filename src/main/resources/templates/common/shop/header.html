@@ -1,0 +1,25 @@
+<head th:fragment="header(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- fix favicon -->
+    <link rel="shortcut icon" href="#">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <!-- font awesome -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}">
+    <!-- bootstrap js -->
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- vue.js -->
+    <script type="text/javascript" th:src="@{/js/vue.js}"></script>
+    <!-- axios.js -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- moment.js -->
+    <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+    <!-- shop.css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/shop.css}">
+
+    <title th:text="${title}"></title>
+</head>

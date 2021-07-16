@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/07/15 15:11
  */
-@RestController
+@RestController("productImageController")
 @RequestMapping("/admin/data")
 public class ProductImageController {
 

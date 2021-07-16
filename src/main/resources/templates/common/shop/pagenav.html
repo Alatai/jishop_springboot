@@ -1,6 +1,6 @@
-<nav aria-label="Page navigation example" style="margin-top: 100px;" th:fragment="pagenav">
+<nav aria-label="Page navigation example" style="margin: 100px 0 200px;" th:fragment="pagenav">
     <div class="container">
-        <div class="page-nav">
+        <div class="page-nav" style="width: 200px; margin: 0 auto;">
             <ul class="pagination">
                 <!-- previous page -->
                 <li class="page-item" :class="{disabled: pageResult.first}">
@@ -20,8 +20,7 @@
 
                 <!-- pages -->
                 <li class="page-item" v-for="no in pageResult.displayNums">
-                    <a class="page-link" href="javascript:"
-                       @click="goPage(no - 1)">{{ no }}</a>
+                    <a class="page-link" href="javascript:" @click="goPage(no - 1)">{{ no }}</a>
                 </li>
 
                 <!-- next page -->

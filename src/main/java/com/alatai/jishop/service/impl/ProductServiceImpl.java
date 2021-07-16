@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findByCategory(Category category) {
+        return productDao.findByCategory(category);
+    }
+
+    @Override
     public Product findById(Integer id) {
         return productDao.getById(id);
     }
@@ -74,6 +80,35 @@ public class ProductServiceImpl implements ProductService {
             if (!singleProductImages.isEmpty()) {
                 product.setFirstImage(singleProductImages.get(0));
             }
+        }
+    }
+
+    @Override
+    public void fillRows(List<Category> categories) {
+        int numberForRow = 4;
+
+        for (Category category : categories) {
+            List<Product> products = category.getProducts();
+            List<List<Product>> productsByRow = new ArrayList<>();
+
+            for (int i = 0; i < products.size(); i += numberForRow) {
+                int size = i + numberForRow;
+                size = Math.min(size, products.size());
+
+                List<Product> productsForRow = products.subList(i, size);
+                productsByRow.add(productsForRow);
+            }
+
+            category.setProductsByRow(productsByRow);
+        }
+    }
+
+    @Override
+    public void associateCategory(List<Category> categories) {
+        for (Category category : categories) {
+            List<Product> products = findByCategory(category);
+            loadFirstImage(products);
+            category.setProducts(products);
         }
     }
 }

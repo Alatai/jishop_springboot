@@ -1,0 +1,1269 @@
+@charset "utf-8";
+
+/* @author saihou */
+
+/* css reset */
+body, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6, pre, p,
+form, button, input, textarea, select,
+table, tr, td, th {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+i, em {
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b {
+    font-weight: normal;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: top;
+}
+
+a {
+    text-decoration: none;
+}
+
+button, input, textarea, select, a {
+    outline: none;
+}
+
+/* common begin */
+/* fix float */
+.clear-fix::after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+}
+
+.clear-fix {
+    *zoom: 1;
+}
+
+.ji-container {
+    position: relative;
+    width: 1190px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+/* common end */
+
+/* ji-nav begin */
+.ji-nav {
+    padding: 5px;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #e7e7e7;
+    font-size: 12px;
+}
+
+.ji-nav span, .ji-nav a {
+    margin: 0 10px 0 10px;
+    color: #e61717;
+}
+
+.ji-nav a:hover {
+    color: #e61717;
+}
+
+.ji-nav a {
+    color: #999;
+    text-decoration: none;
+}
+
+/* ji-nav end */
+
+/* ji-footer begin */
+.ji-footer {
+    position: relative;
+    /*top: 200px;*/
+    height: 220px;
+    background-color: #000;
+}
+
+/* ji-footer end */
+
+/* ji-search begin */
+
+.ji-search {
+    font-size: 12px;
+}
+
+.ji-search a {
+    color: #999;
+}
+
+.ji-search a:hover {
+    text-decoration: none !important;
+    color: #e61717;
+}
+
+.ji-search .ji-logo {
+    position: absolute;
+    left: 0;
+    width: 180px;
+    z-index: -1;
+}
+
+.jis-div {
+    width: 623px;
+    height: 40px;
+    margin: 50px auto;
+    padding: 1px;
+    background-color: #e61717;
+}
+
+.jis-div input {
+    width: 491px;
+    height: 36px;
+    margin: 1px;
+    padding: 5px 3px 5px 5px;
+    border: 1px solid transparent;
+    outline: none;
+}
+
+.jis-div button {
+    width: 120px;
+    border: 1px solid transparent;
+    background-color: #e61717;
+    font-size: 20px;
+    color: #fff;
+}
+
+.jis-div .word-list {
+    margin-top: 3px;
+    margin-left: -20px;
+}
+
+.word-list a {
+    padding: 0 20px 0 20px;
+    font-size: 14px;
+}
+
+/* ji-search end */
+
+/* ji-category begin */
+
+.ji-category {
+    width: 100%
+}
+
+.ji-category .header-bar {
+    background-color: #fff;
+    border-style: solid;
+    border-width: 0 0 2px;
+    border-color: #e61717;
+    text-align: center;
+}
+
+.header-bar .header {
+    display: inline-block;
+    width: 200px;
+    height: 36px;
+    margin-left: 20px;
+    line-height: 36px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #e61717;
+    color: #fff;
+}
+
+.header-bar .right-menu {
+    display: inline-block;
+}
+
+.header-bar .right-menu a {
+    font-size: 16px;
+    color: #333;;
+    text-decoration: none;
+}
+
+.header-bar .right-menu span {
+    margin: 0 20px 0 20px;
+}
+
+.header-bar .right-menu img {
+    height: 30px;
+}
+
+.ji-slider {
+    /*width: 1024px;*/
+    /*height: 510px;*/
+    margin: 0 auto;
+}
+
+.ji-sbck {
+    position: absolute;
+    top: 207px;
+    width: 100%;
+    height: 510px;
+    background-color: #E8E8E8;
+    z-index: -1;
+}
+
+/* ji-category end */
+
+/* ji-products begin */
+.ji-products {
+    margin: 0 auto;
+    padding: 50px 10px 50px 10px;
+    max-width: 1013px;
+    background-color: #f5f5f5;
+}
+
+.p-item {
+    float: left;
+    width: 189px;
+    height: 285px;
+    margin: 8px 4px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.p-item .p-desc {
+    display: block;
+    padding: 16px;
+    font-size: 12px;
+    color: #666;
+}
+
+.p-item .p-price {
+    display: block;
+    padding-left: 16px;
+    margin-top: -10px;
+    font-size: 16px;
+    color: #e61717;
+}
+
+.p-item img {
+    width: 187px;
+    height: 190px;
+}
+
+.p-item img:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+.p-row {
+    margin: 0 0 40px 0;
+}
+
+.pd-link {
+    display: inline-block;
+    height: 66px;
+    text-decoration: none;
+}
+
+.c-title {
+    margin-left: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #646464;
+}
+
+.left-mark {
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: #e61717;
+    vertical-align: top;
+}
+
+/* ji-products end */
+
+/* ji-register begin */
+.ji-register {
+    margin-bottom: 200px;
+}
+
+.ji-register form {
+    width: 460px;
+    height: 450px;
+    margin: 100px auto 0;
+    border: 1px solid #e7e7e7;
+}
+
+.ji-register form div {
+    height: 56px;
+}
+
+.ji-register label {
+    width: 180px;
+    padding: 10px 30px;
+    text-align: right;
+}
+
+.ji-register .jir-msg {
+    line-height: 56px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ji-register input {
+    width: 213px;
+    height: 36px;
+    border: 1px solid #DEDEDE;
+    font-size: 14px;
+}
+
+.ji-register button {
+    display: block;
+    width: 170px;
+    height: 36px;
+    margin: 10px auto 0;
+    border-radius: 2px;
+    background-color: #e61717;
+    border-width: 0;
+    color: white;
+}
+
+/* ji-register end */
+
+/* ji-login begin */
+.ji-login {
+    margin-bottom: 200px;
+}
+
+.jil-panel {
+    position: relative;
+    top: 100px;
+    width: 350px;
+    height: 450px;
+    margin: 0 auto;
+    border: 1px solid #e7e7e7;
+}
+
+.jil-panel form {
+    padding: 60px 25px 40px 25px;
+}
+
+.jil-panel div {
+    margin: 20px 0;
+}
+
+.jil-panel label i {
+    background-color: #CBCBCB;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.jil-panel input {
+    width: 260px;
+    height: 40px;
+    margin: -4px;
+    border: 1px solid #CBCBCB;
+}
+
+.jil-panel .jil-tip {
+    font-size: 14px;
+    color: #999;;
+}
+
+.jil-panel button {
+    width: 100%;
+    height: 34px;
+    border: 0;
+    background-color: #e61717;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+/* ji-login end */
+
+/* product-panel begin */
+.product-panel {
+    max-width: 1190px;
+    margin: 10px auto;
+}
+
+.ji-product {
+    font-size: 12px;
+    margin: 40px 20px;
+}
+
+.ji-product .pd-img {
+    float: left;
+    width: 400px;
+    height: 400px;
+}
+
+.ji-product .pd-info {
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.pd-info .pd-title {
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.pd-info .pd-subtitle {
+    margin: 0 10px;
+    font-size: 12px;
+    color: #e61717;
+}
+
+.pd-info .pd-price {
+    margin-top: 50px;
+}
+
+.pd-price .price-panel {
+    height: 102px;
+    padding: 10px;
+    background-image: url(http://localhost:8080/jishop/image/site/pbcg.png);
+    color: #666;
+}
+
+.pd-price .op-price {
+    margin-top: 5px;
+}
+
+.pd-price .op-desc {
+    display: inline-block;
+    width: 68px;
+    color: #999;
+}
+
+.pd-price .op-num {
+    font-size: 12px;
+    color: #333;
+    text-decoration: line-through;
+}
+
+.pd-price .pro-desc {
+    display: inline-block;
+    position: relative;
+    left: 0;
+    top: -10px;
+    width: 68px;
+}
+
+.pd-price .pro-symbol {
+    font-size: 18px;
+    color: #e61717;
+}
+
+.pd-price .pro-num {
+    font-size: 30px;
+    font-weight: bold;
+    color: #e61717;
+}
+
+.pd-info .sale-review {
+    margin: 20px 0;
+    padding: 10px;
+    border-top-style: dotted;
+    border-top-color: #C9C9C9;
+    border-top-width: 1px;
+    border-bottom-style: dotted;
+    border-bottom-color: #C9C9C9;
+    border-bottom-width: 1px;
+}
+
+.sale-review div {
+    display: inline-block;
+    width: 49%;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+}
+
+.sale-review div:first-child {
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #E5DFDA;
+}
+
+.pd-info .pd-num {
+    color: #999;
+}
+
+.pd-num .pn-setting {
+    display: inline-block;
+    width: 43px;
+    height: 32px;
+    padding-top: 7px;
+    border: 1px solid #999;
+}
+
+.pn-setting input {
+    width: 80%;
+    height: 80%;
+    border: 0;
+}
+
+.pd-num .up-down img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.pd-num .up-down {
+    display: block;
+    width: 20px;
+    height: 14px;
+    padding-top: 4px;
+    text-align: center;
+    border: 1px solid #999;
+}
+
+.pd-num .ud-middle {
+    display: block;
+    height: 4px;
+}
+
+.pd-num .arrow {
+    display: inline-block;
+    width: 22px;
+    height: 32px;
+    vertical-align: top;
+}
+
+.pd-info .pd-buy {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.pd-buy button {
+    display: inline-block;
+    width: 180px;
+    height: 40px;
+    margin: 0 10px;
+}
+
+.pd-buy .buy {
+    margin-top: 5px;
+    border: 1px solid #e61717;
+    background-color: #FFEDED;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: #e61717;
+}
+
+.pd-buy .cart {
+    border: 1px solid #e61717;
+    background-color: #e61717;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: white;
+}
+
+.pd-buy .cart i {
+    margin-right: 8px;
+}
+
+.p-details {
+    width: 790px;
+    margin: 40px auto 200px;
+    font-size: 12px;
+}
+
+.p-details .pd-top {
+    border: 1px solid #dfdfdf;
+    border-left-width: 0;
+}
+
+.pd-top .detail {
+    padding: 0 20px;
+    color: #333;
+}
+
+.pd-top .review {
+    padding: 0 20px;
+    border-right: 1px dotted #d2d2d2;
+    color: #333;
+}
+
+.pd-top .selected {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    line-height: 46px;
+    border-left: 1px solid #cfbfb1;
+    border-right: 1px solid #cfbfb1;
+    text-align: center;
+    font-weight: bold;
+    color: #e61717;
+}
+
+.pd-top .selected:before {
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 90px;
+    height: 0;
+    margin-left: -1px;
+    border-width: 1px;
+    border-color: #e61717;
+    border-style: solid;
+    content: "";
+}
+
+.pd-top .selected:after {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -1px;
+    width: 0;
+    height: 0;
+    margin-left: -5px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #e61717 transparent transparent;
+    content: "";
+}
+
+.review span {
+    color: #3355b9;
+}
+
+.p-details .pd-property {
+    border: 1px solid #dfdfdf;
+    padding: 40px;
+}
+
+.pd-property div:first-child {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #999;
+}
+
+.pd-property .pp-list span {
+    float: left;
+    display: block;
+    width: 220px;
+    padding: 8px 0;
+    color: #666;
+}
+
+.p-details img {
+    display: block;
+    width: 790px;
+    margin: 20px 0;
+}
+
+.jir-content {
+    padding-top: 50px;
+}
+
+.jir-item {
+    margin: 10px 0;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.jir-item .jir-info {
+    float: left;
+    display: inline-block;
+    width: 80%;
+    margin: 5px 20px;
+    color: #333;
+}
+
+.jir-item .jir-date {
+    margin: 15px 0 0 0;
+    color: #ccc;
+}
+
+.jir-item .jir-user {
+    margin: 5px 20px;
+    padding: 20px 0;
+    color: #404040;
+}
+
+.jir-user span {
+    color: #999;
+}
+
+/* product-panel end */
+
+/* ji-account begin */
+.ji-order {
+    margin-bottom: 200px;
+}
+
+.ji-order .ji-address, .ja-confirm {
+    margin: 100px auto 20px;
+    max-width: 1190px;
+}
+
+.ja-tip {
+    margin-bottom: 30px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333333;
+}
+
+.ja-detail {
+    margin: 20px 20px;
+    width: 600px;
+    font-size: 12px;
+}
+
+.ja-detail label {
+    width: 100px;
+}
+
+.ja-detail label span {
+    font-size: 8px;
+    color: #e61717;
+}
+
+.ja-detail textarea {
+    width: 400px;
+    border: 1px solid #AFAFAF;
+}
+
+.ja-detail input {
+    width: 200px;
+    border: 1px solid #AFAFAF;
+}
+
+.ji-order table {
+    width: 100%;
+    border-collapse: separate;
+    font-size: 12px;
+}
+
+.ji-order .ja-row td {
+    height: 3px;
+    background-color: #b2d1ff;
+    border-right: 2px solid #fff;
+}
+
+.ji-order .ad-info {
+    padding: 10px 0;
+}
+
+.ji-order .ji-column {
+    text-align: center;
+    color: #999;
+}
+
+.ja-confirm table th {
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 12px;
+    color: #999999;
+}
+
+.ad-info a {
+    display: block;
+    color: #666;
+}
+
+.ad-info img {
+    height: 16px;
+}
+
+.ja-confirm .jo-item td {
+    border-bottom: 1px solid #E5E5E5
+}
+
+.jo-sum {
+    height: 50px;
+    padding: 20px;
+    border-top: 2px solid #B4D0FF;
+    background-color: #F2F6FF;
+}
+
+.jo-sum, .o-total span:first-child {
+    font-size: 12px;
+    color: #999;
+}
+
+.jo-total {
+    height: 40px;
+    margin: 40px;
+}
+
+.jo-total .total {
+    border-bottom: 1px dotted #F2F6FF;
+    font-size: 22px;
+    font-weight: bold;
+    color: #e61717;
+}
+
+.ji-order input[type="submit"] {
+    float: right;
+    display: inline-block;
+    width: 180px;
+    height: 40px;
+    margin: 0 10px;
+    border: 1px solid #e61717;
+    background-color: #e61717;
+    line-height: 40px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+}
+
+/* ji-account end */
+
+/* ji-cart begin */
+.ji-cart {
+    margin-top: 150px;
+    margin-bottom: 220px;
+    font-size: 12px;
+}
+
+.ji-cart .jic-price {
+    margin-left: 5px;
+    margin-right: 3px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #e61717;
+}
+
+.ji-cart .jic-btn {
+    width: 53px;
+    height: 25px;
+    border-radius: 2px;
+    border: 1px solid #aaa;
+    background-color: #aaa;
+    color: white;
+}
+
+.jic-footer {
+    position: relative;
+    top: 50px;
+    background-color: #E5E5E5;
+    line-height: 50px;
+    margin: 20px 0;
+    color: black;
+    padding-left: 20px;
+}
+
+.jic-footer .jic-checkbox {
+    display: inline-block;
+}
+
+.jic-checkbox input {
+    position: relative;
+    top: 7px;
+}
+
+.jic-checkbox label {
+    position: relative;
+    top: 5px;
+}
+
+.jic-footer .jic-downBtn {
+    width: 120px;
+    height: 58px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.jic-list {
+    position: relative;
+    top: 50px;
+}
+
+.jic-list table {
+    width: 100%;
+}
+
+.jic-list th input {
+    position: relative;
+    top: 2px;
+}
+
+.jic-list thead th {
+    padding: 20px 20px;
+    font-weight: normal;
+    color: #3c3c3c;
+}
+
+.jic-list tbody tr {
+    border: 1px solid #ccc;
+}
+
+.jic-list tbody td {
+    padding: 20px 20px;
+}
+
+.jic-info a {
+    display: block;
+}
+
+.jic-op {
+    display: block;
+    text-decoration: line-through;
+    font-weight: bold;
+    font-size: 14px;
+    color: #9c9c9c;
+}
+
+.jic-pp {
+    font-weight: bold;
+    font-size: 14px;
+    color: #e61717;
+}
+
+.jic-list a {
+    color: #999;
+}
+
+.jic-num input {
+    width: 30px;
+    text-align: center;
+}
+
+/* ji-cart end */
+
+/* ji-pay begin */
+.ji-pay {
+    margin-top: 200px;
+    margin-bottom: 400px;
+    text-align: center;
+}
+
+.ji-pay div:first-child {
+    width: 350px;
+    margin: 0 auto;
+}
+
+.ji-pay div {
+    width: 350px;
+    margin: 20px 0;
+}
+
+.ji-pay div span:first-child {
+    position: relative;
+    right: 10px;
+}
+
+.ji-pay div .jip-amount {
+    display: inline-block;
+    width: 175px;
+    position: relative;
+    left: -20px;
+    margin-left: 5px;
+    margin-right: 3px;
+    font-weight: bold;
+    color: #e61717;
+}
+
+.ji-pay button {
+    display: block;
+    width: 170px;
+    height: 36px;
+    margin: 10px auto 0;
+    border-radius: 2px;
+    background-color: #e61717;
+    border-width: 0;
+    color: white;
+}
+
+/* ji-pay end */
+
+/* ji-paid begin */
+.ji-paid {
+    margin-top: 200px;
+    margin-bottom: 400px;
+    text-align: center;
+}
+
+/* ji-paid end */
+
+/* ji-orders begin */
+.ji-orders {
+    max-width: 1190px;
+    margin: 100px auto 200px;
+}
+
+.ji-orders .jio-type div {
+    float: left;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.ji-orders .jio-type a {
+    float: left;
+    margin-bottom: 10px;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.ji-orders .jio-type a:hover {
+    color: #e61717;
+    text-decoration: none;
+}
+
+.ji-orders .jio-active {
+    border-bottom: 2px solid #e61717;
+}
+
+.ji-orders .jio-active a {
+    color: #e61717;
+}
+
+.ji-orders .jio-last {
+    float: none !important;
+    height: 35px;
+    border-bottom: 2px solid #e8e8e8;
+    overflow: hidden;
+}
+
+.jio-list .jil-title {
+    width: 100%;
+    margin: 20px 0;
+    border: 1px solid #e8e8e8;
+    background-color: #f5f5f5;
+    text-align: center;
+    font-size: 12px;
+}
+
+.jio-list .jil-title td {
+    padding: 12px 0;
+}
+
+.ji-orders .jio-table {
+    width: 100%;
+    margin: 20px 0;
+    border: 2px solid #ececec;
+    font-size: 12px;
+}
+
+.jio-orders .jio-table:hover {
+    border: 2px solid #aaa !important;
+}
+
+.jio-item td {
+    padding: 8px 10px;
+}
+
+.jio-item .jio-first {
+    background-color: #f1f1f1;
+}
+
+.jio-item .jio-delete {
+    text-align: right;
+}
+
+.jio-item .jio-delete i {
+    margin: 0 10px;
+    font-size: 16px;
+    color: #999;
+}
+
+.info-td .jio-link {
+    position: relative;
+    height: 80px;
+    padding-top: 30px;
+}
+
+.jio-link a {
+    color: #999;
+}
+
+.jio-link img {
+    display: block;
+}
+
+.info-td .jio-op {
+    font-size: 14px;
+    color: #999;
+}
+
+.info-td .jio-pp {
+    font-size: 14px;
+    color: #3c3c3c;
+}
+
+.info-td .jio-num {
+    text-align: center;
+}
+
+.info-part {
+    border: solid 1px #ececec;
+    text-align: center;
+}
+
+.info-td button {
+    background-color: #66B6FF;
+    padding: 6px 12px;
+    border-radius: 2px;
+    border-width: 0;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+}
+
+/* ji-orders end */
+
+/* ji-review begin */
+.ji-review {
+    width: 950px;
+    margin: 200px auto;
+}
+
+.ji-review .jir-header {
+    position: relative;
+    vertical-align: middle;
+    border-bottom: 2px solid #e61717;
+    line-height: 35px;
+    background: #efefef;
+    z-index: 1;
+}
+
+.jir-header h3 {
+    float: left;
+    background-color: #e61717;
+    padding: 2px 50px;
+    margin: 0;
+    text-align: center;
+    color: #FFF;
+    font-size: 1.4em;
+    font-weight: 300;
+}
+
+.ji-review .jir-body {
+    border: 1px solid #d9e3eb;
+    margin-top: -2px;
+}
+
+.jir-body ul {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.jir-body .jir-product {
+    width: 200px;
+}
+
+.jir-body li img {
+    float: left;
+    position: relative;
+    width: 160px;
+    padding: 20px 0 0 100px;
+}
+
+.jir-body li div {
+    float: left;
+}
+
+.jir-body .jir-main {
+    float: left;
+    width: 570px;
+    margin-left: 50px;
+}
+
+.jir-body .jir-bcg {
+    padding: 3px;
+    border: 1px solid #DAF1FC;
+    background: #EEF8FD;
+    zoom: 1;
+}
+
+.jir-body textarea {
+    display: block;
+    position: relative;
+    top: -24px;
+    width: 544px;
+    height: 110px;
+    padding: 8px;
+    border: 1px solid #CCC;
+    outline: 0;
+    resize: vertical;
+}
+
+.ji-review .jir-submit {
+    margin-top: 10px;
+    padding: 20px 0 30px 400px;
+}
+
+.jir-submit button {
+    width: 104px;
+    padding: 9px 13px;
+    border: none;
+    font-size: 12px;
+    color: #fff;
+    background-color: #3498db;
+}
+
+/* ji-review end */
+
+/* ji-results begin */
+.jip-container {
+    width: 1210px;
+    margin: 100px auto 200px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.jip-item {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #f5f5f5;
+}
+
+.jip-item img {
+    width: 210px;
+    height: 210px;
+}
+
+.jip-item .jip-price {
+    font-weight: 400;
+    font-size: 20px;
+    color: #e61717;
+    margin: 0 0 5px;
+}
+
+.jip-price span {
+    font-size: 14px;
+}
+
+.jip-item .jip-title {
+    position: relative;
+    height: 14px;
+    margin-bottom: 3px;
+    line-height: 12px;
+    color: #666;
+}
+
+.jip-title a {
+    font-size: 12px;
+    line-height: 14px;
+    color: #333;
+}
+
+.jip-item .jip-info {
+    margin-bottom: 6px;
+    /*border-top: 1px solid #eee;*/
+}
+
+.jip-item .jip-info span {
+    padding: 10px 1px;
+}
+
+/* ji-results end */

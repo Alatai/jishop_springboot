@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 1.0
  * @date 2021/07/14 11:46
  */
-@Controller
+@Controller("adminPageController")
 @RequestMapping("/admin")
-public class PageController {
+public class AdminPageController {
 
     /**
      * 管理首页

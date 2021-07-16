@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  * @date 2021/07/15 13:43
  */
-@RestController
+@RestController("productController")
 @RequestMapping("/admin/data")
 public class ProductController {
 

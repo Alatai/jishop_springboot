@@ -23,5 +23,4 @@ public interface CategoryService {
     Category update(Category category);
 
     void deleteById(Integer id);
-
 }

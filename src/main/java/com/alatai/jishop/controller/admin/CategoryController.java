@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  * @date 2021/07/12 18:17
  */
-@RestController // 每个方法的返回值都会直接转换为JSON格式数据
+@RestController("categoryController") // 每个方法的返回值都会直接转换为JSON格式数据
 @RequestMapping("/admin/data")
 public class CategoryController {
 

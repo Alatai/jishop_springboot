@@ -14,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/07/15 22:07
  */
-@RestController
+@RestController("propertyValueController")
 @RequestMapping("/admin/data")
 public class PropertyValueController {
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  * @date 2021/07/16 14:33
  */
-@RestController
+@RestController("orderController")
 @RequestMapping("/admin/data")
 public class OrderController {
 
