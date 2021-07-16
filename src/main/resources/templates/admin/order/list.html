@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/admin/header::header('オーダー管理')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let vm = new Vue({
+            el: '#orders',
+            data: {
+                url: 'data/orders',
+                pageResult: {}
+            },
+            mounted: function () {
+                this.list(0);
+            },
+            methods: {
+                // 加载数据
+                list: function (start) {
+                    axios.get(this.url, {
+                        params: {
+                            start: start
+                        }
+                    }).then((response) => {
+                        vm.pageResult = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 控制跳转页面
+                goPage: function (num) {
+                    if (num !== vm.pageResult.number) {
+                        this.list(num);
+                    }
+                },
+                // 发货
+                deliver: function (id) {
+                    axios.put(this.url + "/" + id).then(() => {
+                        this.list(0);
+                    });
+                }
+            }
+        });
+
+        // 日期格式处理
+        Vue.filter('formatDateFilter', function (dateValue, formatString) {
+            if (null == dateValue) {
+                return "";
+            }
+
+            formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+
+            return moment(dateValue).format(formatString);
+        });
+    });
+</script>
+
+<div id="orders">
+    <!-- nav -->
+    <div th:replace="common/admin/navbar::nav"></div>
+
+    <!-- list -->
+    <div class="container" style="min-width: 1340px;">
+        <div class="bread-control">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:">サイト管理</a></li>
+                    <li class="breadcrumb-item active"
+                        aria-current="page">オーダー管理
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div>
+            <input id="deleteUrl" type="hidden">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">状態</th>
+                    <th scope="col">金額</th>
+                    <th scope="col">商品数</th>
+                    <th scope="col">客名</th>
+                    <th scope="col">オーダー日時</th>
+                    <th scope="col">支払い日時</th>
+                    <th scope="col">配達日時</th>
+                    <th scope="col">確認日時</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="order in pageResult.content">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.statusDesc }}</td>
+                    <td>￥{{ order.amount }}</td>
+                    <td>{{ order.number }} 個</td>
+                    <td>{{ order.receiver }}</td>
+                    <td>{{ order.createdDate | formatDateFilter }}</td>
+                    <td>{{ order.paidDate | formatDateFilter }}</td>
+                    <td>{{ order.deliveredDate | formatDateFilter }}</td>
+                    <td>{{ order.confirmedDate | formatDateFilter }}</td>
+                    <td>
+                        <a href="javascript:" v-on:click="deliver(order.id)"><i class="fas fa-truck"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- pageNav -->
+    <div th:replace="common/admin/pagenav::pagenav"></div>
+</div>
+
+</body>
+</html>

@@ -32,6 +32,8 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "uid")
     private User user;
 
+    private Integer number;
+
     public Integer getId() {
         return id;
     }
@@ -62,5 +64,13 @@ public class OrderItem implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

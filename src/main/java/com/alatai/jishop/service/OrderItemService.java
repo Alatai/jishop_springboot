@@ -1,5 +1,6 @@
 package com.alatai.jishop.service;
 
+import com.alatai.jishop.entity.Category;
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.User;
@@ -13,11 +14,17 @@ import java.util.List;
  */
 public interface OrderItemService {
 
-    int insert(OrderItem orderItem);
+    List<OrderItem> findAll();
 
-    int update(OrderItem orderItem);
+    OrderItem findById(Integer id);
 
-    int delete(Integer id);
+    List<OrderItem> findByOrder(Order order);
+
+    OrderItem insert(OrderItem orderItem);
+
+    OrderItem update(OrderItem orderItem);
+
+    void deleteById(Integer id);
 
     /**
      * オーダー金額計算-list

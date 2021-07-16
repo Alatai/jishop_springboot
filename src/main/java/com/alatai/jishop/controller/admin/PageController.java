@@ -70,4 +70,12 @@ public class PageController {
     public String listUsers() {
         return "admin/user/list";
     }
+
+    /**
+     * 订单页面
+     */
+    @GetMapping("/orders")
+    public String listOrders() {
+        return "admin/order/list";
+    }
 }
