@@ -43,6 +43,69 @@
                 }
             }
         });
+
+        // ショッピングカート
+        $('#add2Cart').click(function () {
+            axios.get('data/isLogin').then((response) => {
+                if (response.data === 'success') {
+                    let pid = vm.product.id;
+                    let num = $('#purchaseNum').val();
+                    let data = {'pid': pid, 'num': num};
+
+                    $.ajax({
+                        url: 'http://localhost:8080/jishop/order/add2Cart',
+                        type: 'POST',
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(data),
+                        success: function (ret) {
+                            if ('success' === ret) {
+                                $('#add2CartBtn').html('追加しました');
+                                $('#add2CartBtn').attr('disabled', 'disabled');
+                                $('#add2CartBtn').css("background-color", "lightgray");
+                                $('#add2CartBtn').css("border-color", "lightgray");
+                                $('#add2CartBtn').css("color", "black");
+
+                                // $("#cartNum").html(${Session["cartNum"]} +1);
+                            }
+                        }
+                    });
+                } else {
+                    $('#loginModal').modal();
+                }
+            });
+        });
+
+        // すぐ購入する
+        $('#buyCurrently').click(function () {
+            axios.get('data/isLogin').then((response) => {
+                if (response.data === 'success') {
+                    let pid = vm.product.id;
+                    let num = $('#purchaseNum').val();
+
+                    location.href = 'http://localhost:8080/jishop/order/buyCurrently?pid='
+                        + pid + '&num=' + num;
+                } else {
+                    $('#loginModal').modal();
+                }
+            });
+        });
+
+        //  モーダルログイン
+        $('#modalLoginBtn').click(function () {
+            let name = $('#name').val();
+            let password = $('#password').val();
+            let data = {'name': name, 'password': password};
+
+            axios.post('data/modalLogin', data).then((response) => {
+                if (response.data === 'success') {
+                    location.reload();
+                } else {
+                    console.log('error');
+                }
+            });
+
+            return true;
+        });
     });
 </script>
 
@@ -153,6 +216,8 @@
         </div>
     </div>
 
+    <!-- loginModal -->
+    <div th:replace="shop/product/loginModal::loginModal"></div>
     <!-- footer -->
     <div th:replace="common/shop/footer::footer"></div>
 </div>

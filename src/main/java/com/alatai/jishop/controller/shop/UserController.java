@@ -7,19 +7,18 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * @author Alatai
  * @version 1.0
  * @date 2021/07/16 20:25
  */
+@SuppressWarnings("DuplicatedCode")
 @RestController("shopUserController")
 @RequestMapping("/data")
 public class UserController {
@@ -64,4 +63,33 @@ public class UserController {
         }
     }
 
+    @GetMapping("/isLogin")
+    public String checkLogin() {
+        Subject subject = SecurityUtils.getSubject();
+
+        if (!subject.isAuthenticated()) {
+            return "fail";
+        }
+
+        return "success";
+    }
+
+    @PostMapping("/modalLogin")
+    public String modalLogin(HttpSession session, @RequestBody Map<String, String> params) {
+        String name = params.get("name");
+        String password = params.get("password");
+
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(name, password);
+
+        try {
+            subject.login(token);
+            User user = userService.findByName(name);
+            session.setAttribute("user", user);
+
+            return "success";
+        } catch (AuthenticationException exp) {
+            return "fail";
+        }
+    }
 }
