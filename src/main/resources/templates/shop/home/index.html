@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:replace="common/shop/header::header('jishop')">
+</head>
 <body>
 
 <script type="text/javascript">
@@ -46,11 +47,11 @@
             <span class="c-title clear-fix">{{ category.name }}</span>
 
             <div class="p-item" v-for="product in category.products">
-                <a href="product/detail?id=${product.id}">
+                <a :href="'products?pid=' + product.id">
                     <img :src="'img/single/' + product.firstImage.name"
                          alt="写真なし">
                 </a>
-                <a class="pd-link" href="product/detail?id=${product.id}">
+                <a class="pd-link" :href="'products?pid=' + product.id">
                     <span class="p-desc">[人気]{{ product.name }}</span>
                 </a>
                 <span class="p-price">￥{{ product.promotePrice }}</span>

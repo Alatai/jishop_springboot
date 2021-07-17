@@ -4,9 +4,7 @@ import com.alatai.jishop.dao.ProductDao;
 import com.alatai.jishop.entity.Category;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.ProductImage;
-import com.alatai.jishop.service.CategoryService;
-import com.alatai.jishop.service.ProductImageService;
-import com.alatai.jishop.service.ProductService;
+import com.alatai.jishop.service.*;
 import com.alatai.jishop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +30,10 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
     @Autowired
     private ProductImageService productImageService;
+    @Autowired
+    private OrderItemService orderItemService;
+    @Autowired
+    private ReviewService reviewService;
 
     @Override
     public List<Product> findAll() {
@@ -74,12 +76,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void loadFirstImage(List<Product> products) {
+    public void associateFirstImage(Product product) {
+        List<ProductImage> singleProductImages = productImageService.findSingleProductImages(product);
+        if (!singleProductImages.isEmpty()) {
+            product.setFirstImage(singleProductImages.get(0));
+        }
+    }
+
+    @Override
+    public void associateFirstImage(List<Product> products) {
         for (Product product : products) {
-            List<ProductImage> singleProductImages = productImageService.findSingleProductImages(product);
-            if (!singleProductImages.isEmpty()) {
-                product.setFirstImage(singleProductImages.get(0));
-            }
+            associateFirstImage(product);
         }
     }
 
@@ -107,8 +114,23 @@ public class ProductServiceImpl implements ProductService {
     public void associateCategory(List<Category> categories) {
         for (Category category : categories) {
             List<Product> products = findByCategory(category);
-            loadFirstImage(products);
+            associateFirstImage(products);
             category.setProducts(products);
         }
+    }
+
+    @Override
+    public Product productDetail(Product product) {
+        List<ProductImage> singleProductImages = productImageService.findSingleProductImages(product);
+        List<ProductImage> detailProductImages = productImageService.findDetailProductImages(product);
+        int saleCount = orderItemService.getSaleCount(product);
+        int reviewCount = reviewService.getReviewCount(product);
+
+        product.setSingleImages(singleProductImages);
+        product.setDetailImages(detailProductImages);
+        product.setSaleCount(saleCount);
+        product.setReviewCount(reviewCount);
+
+        return product;
     }
 }

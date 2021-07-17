@@ -24,7 +24,7 @@ public class ProductController {
                                     @RequestParam(value = "size", defaultValue = "5") int size) {
         start = start < 0 ? 0 : start;
         PageResult<Product> pageResult = productService.findAll(cid, start, size, 5);
-        productService.loadFirstImage(pageResult.getContent());
+        productService.associateFirstImage(pageResult.getContent());
 
         return pageResult;
     }

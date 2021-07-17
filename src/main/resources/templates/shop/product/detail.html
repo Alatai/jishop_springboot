@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('jishop')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let pid = getUrlParams('pid');
+
+        let vm = new Vue({
+            el: '#product',
+            data: {
+                url: 'data/products',
+                product: {},
+                propertyValues: [],
+                reviews: [],
+                detailSwitch: true,
+                reviewSwitch: false
+            },
+            created: function () {
+                this.load();
+            },
+            methods: {
+                load: function () {
+                    axios.get(this.url + "/" + pid).then((response) => {
+                        console.log(response.data);
+                        vm.product = response.data.product;
+                        vm.propertyValues = response.data.propertyValues;
+                        vm.reviews = response.data.reviews;
+                    });
+                },
+                // 商品詳細と評価、クリックして交換
+                showDetail: function () {
+                    vm.detailSwitch = true;
+                    vm.reviewSwitch = false;
+                },
+                showReviews: function () {
+                    vm.detailSwitch = false;
+                    vm.reviewSwitch = true;
+                }
+            }
+        });
+    });
+</script>
+
+<div id="product">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- detail -->
+    <div class="product-panel">
+        <div class="ji-product">
+            <div class="pd-img clear-fix">
+                <img style="width: 400px;"
+                     :src="'img/single/' + product.firstImage.name"
+                     alt="写真なし"
+                     v-if="product.firstImage">
+            </div>
+
+            <div class="pd-info">
+                <div class="pd-title">{{ product.name }}</div>
+                <div class="pd-subtitle">{{ product.subtitle }}</div>
+
+                <div class="pd-price">
+                    <div class="price-panel">
+                        <div class="op-price">
+                            <span class="op-desc">原価</span>
+                            <span class="op-symbol">￥</span>
+                            <span class="op-num">{{ product.originalPrice }}</span>
+                        </div>
+
+                        <div class="pro-price">
+                            <span class="pro-desc">今の値段</span>
+                            <span class="pro-symbol">￥</span>
+                            <span class="pro-num">{{ product.promotePrice }}</span>
+                        </div>
+                    </div>
+
+                    <div class="sale-review">
+                        <div>販売量 <span>{{ product.saleCount }}</span></div>
+                        <div>評価数 <span>{{ product.reviewCount }}</span></div>
+                    </div>
+
+                    <div class="pd-num">
+                        <span>数</span>
+                        <span>
+                    <span class="pn-setting">
+                        <input id="purchaseNum" value="1" type="text" placeholder="1">
+                    </span>
+                    <span class="arrow">
+                        <a id="increaseNum" class="pn-inc" href="javascript:">
+                            <span class="up-down"><img src="img/site/increase.png" alt=""></span>
+                        </a>
+
+                        <span class="ud-middle"></span>
+
+                        <a id="decreaseNum" class="pn-dec" href="javascript:">
+                            <span class="up-down"><img src="img/site/decrease.png" alt=""></span>
+                        </a>
+                    </span>
+                件</span>
+                        <span>在庫{{ product.stock }}件</span>
+                    </div>
+
+                    <div class="pd-buy">
+                        <a href="javascript:">
+                            <button id="buyCurrently" class="buy">今すく買う</button>
+                        </a>
+                        <a id="add2Cart" href="javascript:">
+                            <button id="add2CartBtn" class="cart">
+                                <i class="fas fa-shopping-cart"></i>カートに入れる
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-details">
+            <div class="pd-top">
+                <a id="productDetail" class="detail" :class="{selected: detailSwitch}"
+                   href="javascript:" v-on:click="showDetail">商品詳細</a>
+                <a id="productReviews" class="review " :class="{selected: reviewSwitch}"
+                   href="javascript:" v-on:click="showReviews">評価数 <span>{{ product.reviewCount }}</span>
+                </a>
+            </div>
+
+            <div class="pd-property" v-show="detailSwitch">
+                <div>商品属性</div>
+                <div class="pp-list clear-fix" v-for="propertyValue in propertyValues">
+                    <span>{{ propertyValue.property.name }}: {{ propertyValue.value }}</span>
+                </div>
+            </div>
+
+            <div id="detailImage" v-for="detailImage in product.detailImages" v-show="detailSwitch">
+                <img :src="'img/detail/' + detailImage.name" alt="">
+            </div>
+
+            <div class="jir-content" v-for="review in reviews" v-show="reviewSwitch">
+                <div class="jir-item clear-fix">
+                    <div class="jir-info">
+                        <div class="jir-desc">{{ review.content }}</div>
+                        <div class="jir-date">{{ review.createdDate }}</div>
+                    </div>
+                    <div class="jir-user">
+                        {{ review.user.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

@@ -432,7 +432,7 @@ button, input, textarea, select, a {
 .pd-price .price-panel {
     height: 102px;
     padding: 10px;
-    background-image: url(http://localhost:8080/jishop/image/site/pbcg.png);
+    background-image: url(http://localhost:8080/jishop/img/site/pbcg.png);
     color: #666;
 }
 

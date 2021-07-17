@@ -3,6 +3,7 @@ package com.alatai.jishop.service.impl;
 import com.alatai.jishop.dao.OrderItemDao;
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
+import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> findByOrder(Order order) {
         return orderItemDao.findByOrder(order);
+    }
+
+    @Override
+    public List<OrderItem> findByProduct(Product product) {
+        return orderItemDao.findByProduct(product);
     }
 
     @Override
@@ -80,7 +86,16 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public int getSaleCount(Integer pid) {
-        return 0;
+    public int getSaleCount(Product product) {
+        List<OrderItem> orderItems = findByProduct(product);
+        int saleCount = 0;
+
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getOrder() != null && orderItem.getOrder().getPaidDate() != null) {
+                saleCount += orderItem.getNumber();
+            }
+        }
+
+        return saleCount;
     }
 }

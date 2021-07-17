@@ -1,9 +1,6 @@
 package com.alatai.jishop.service;
 
-import com.alatai.jishop.entity.Category;
-import com.alatai.jishop.entity.Order;
-import com.alatai.jishop.entity.OrderItem;
-import com.alatai.jishop.entity.User;
+import com.alatai.jishop.entity.*;
 
 import java.util.List;
 
@@ -19,6 +16,8 @@ public interface OrderItemService {
     OrderItem findById(Integer id);
 
     List<OrderItem> findByOrder(Order order);
+
+    List<OrderItem> findByProduct(Product product);
 
     OrderItem insert(OrderItem orderItem);
 
@@ -41,5 +40,5 @@ public interface OrderItemService {
      */
     int checkOrderItem(User user, Integer pid, Integer num);
 
-    int getSaleCount(Integer pid);
+    int getSaleCount(Product product);
 }

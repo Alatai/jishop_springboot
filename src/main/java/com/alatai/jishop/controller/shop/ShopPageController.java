@@ -52,4 +52,9 @@ public class ShopPageController {
 
         return "redirect:/index";
     }
+
+    @GetMapping("/products")
+    public String productDetail(){
+        return "shop/product/detail";
+    }
 }

@@ -27,7 +27,9 @@ public interface ProductService {
 
     void deleteById(Integer id);
 
-    void loadFirstImage(List<Product> products);
+    void associateFirstImage(Product product);
+
+    void associateFirstImage(List<Product> products);
 
     /**
      * 分類を基に、関連している商品を検索
@@ -38,4 +40,9 @@ public interface ProductService {
      * 关联对应分类
      */
     void associateCategory(List<Category> categories);
+
+    /**
+     * 准备商品详情页信息
+     */
+    Product productDetail(Product product);
 }

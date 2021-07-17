@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Alatai
@@ -39,6 +40,18 @@ public class Product implements Serializable {
 
     @Transient // 不存到数据库中，仅做临时变量
     private ProductImage firstImage;
+
+    @Transient
+    private List<ProductImage> singleImages;
+
+    @Transient
+    private List<ProductImage> detailImages;
+
+    @Transient
+    private Integer saleCount;
+
+    @Transient
+    private Integer reviewCount;
 
     public Integer getId() {
         return id;
@@ -112,18 +125,35 @@ public class Product implements Serializable {
         this.firstImage = firstImage;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", subtitle='" + subtitle + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", promotePrice=" + promotePrice +
-                ", stock=" + stock +
-                ", createdDate=" + createdDate +
-                ", category=" + category +
-                ", firstImage=" + firstImage +
-                '}';
+    public List<ProductImage> getSingleImages() {
+        return singleImages;
+    }
+
+    public void setSingleImages(List<ProductImage> singleImages) {
+        this.singleImages = singleImages;
+    }
+
+    public List<ProductImage> getDetailImages() {
+        return detailImages;
+    }
+
+    public void setDetailImages(List<ProductImage> detailImages) {
+        this.detailImages = detailImages;
+    }
+
+    public Integer getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Integer saleCount) {
+        this.saleCount = saleCount;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
 }
