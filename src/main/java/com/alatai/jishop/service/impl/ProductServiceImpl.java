@@ -2,6 +2,7 @@ package com.alatai.jishop.service.impl;
 
 import com.alatai.jishop.dao.ProductDao;
 import com.alatai.jishop.entity.Category;
+import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.ProductImage;
 import com.alatai.jishop.service.*;
@@ -124,6 +125,14 @@ public class ProductServiceImpl implements ProductService {
             List<Product> products = findByCategory(category);
             associateFirstImage(products);
             category.setProducts(products);
+        }
+    }
+
+    @Override
+    public void associateOrderItem(List<OrderItem> orderItems) {
+        for (OrderItem orderItem : orderItems) {
+            Product product = orderItem.getProduct();
+            associateFirstImage(product);
         }
     }
 

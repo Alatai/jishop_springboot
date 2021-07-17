@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:replace="common/shop/header::header('jishop')">
@@ -44,6 +43,47 @@
             }
         });
 
+        let stock = vm.product.stock;
+
+        // 在庫切り
+        if (stock === 0) {
+            $('#add2CartBtn').attr('disabled', 'disabled');
+            $('#buyCurrently').attr('disabled', 'disabled');
+        }
+
+        // 購入数追加
+        $('#purchaseNum').keyup(function () {
+            let num = $(this).val();
+            num = parseInt(num);
+
+            if (isNaN(num))
+                num = 1;
+            if (num <= 0)
+                num = 1;
+            if (num > stock)
+                num = stock;
+
+            $(this).val(num);
+        });
+
+        // 追加click
+        $('#increaseNum').click(function () {
+            let num = $('#purchaseNum').val();
+            num++;
+            num = num > stock ? stock : num;
+
+            $('#purchaseNum').val(num);
+        });
+
+        // 減少click
+        $('#decreaseNum').click(function () {
+            let num = $('#purchaseNum').val();
+            num--;
+            num = num <= 0 ? 1 : num;
+
+            $('#purchaseNum').val(num);
+        });
+
         // ショッピングカート
         $('#add2Cart').click(function () {
             axios.get('data/isLogin').then((response) => {
@@ -82,8 +122,18 @@
                     let pid = vm.product.id;
                     let num = $('#purchaseNum').val();
 
-                    location.href = 'http://localhost:8080/jishop/order/buyCurrently?pid='
-                        + pid + '&num=' + num;
+                    console.log(pid);
+                    console.log(num);
+                    axios.get('data/buyCurrently', {
+                        params: {
+                            pid: pid,
+                            num: num
+                        }
+                    }).then((response) => {
+                        console.log(response.data);
+
+                        location.href = "order?oiId=" + response.data;
+                    });
                 } else {
                     $('#loginModal').modal();
                 }

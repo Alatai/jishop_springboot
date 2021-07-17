@@ -1,6 +1,7 @@
 package com.alatai.jishop.service;
 
 import com.alatai.jishop.entity.Category;
+import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.util.PageResult;
 
@@ -42,6 +43,11 @@ public interface ProductService {
      * 关联对应分类
      */
     void associateCategory(List<Category> categories);
+
+    /**
+     * 结算页面关联订单详情
+     */
+    void associateOrderItem(List<OrderItem> orderItems);
 
     /**
      * 准备商品详情页信息

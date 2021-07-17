@@ -3,6 +3,7 @@ package com.alatai.jishop.dao;
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.Product;
+import com.alatai.jishop.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface OrderItemDao extends JpaRepository<OrderItem, Integer> {
     List<OrderItem> findByOrder(Order order);
 
     List<OrderItem> findByProduct(Product product);
+
+    List<OrderItem> findByUser(User user);
 }

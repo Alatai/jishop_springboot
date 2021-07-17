@@ -6,6 +6,7 @@ import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.OrderItemService;
+import com.alatai.jishop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
     private OrderItemDao orderItemDao;
+    @Autowired
+    private ProductService productService;
 
     @Override
     public List<OrderItem> findAll() {
@@ -40,6 +43,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> findByProduct(Product product) {
         return orderItemDao.findByProduct(product);
+    }
+
+    @Override
+    public List<OrderItem> findByUser(User user) {
+        return orderItemDao.findByUser(user);
     }
 
     @Override
@@ -82,7 +90,34 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public int checkOrderItem(User user, Integer pid, Integer num) {
-        return 0;
+        Product product = productService.findById(pid);
+        List<OrderItem> orderItems = findByUser(user);
+
+        int orderItemId = 0;
+        boolean isExist = false;
+
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getProduct().getId().equals(product.getId())) {
+                orderItem.setNumber(orderItem.getNumber() + num);
+                update(orderItem);
+
+                isExist = true;
+                orderItemId = orderItem.getId();
+                break;
+            }
+        }
+
+        if (!isExist) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setUser(user);
+            orderItem.setProduct(product);
+            orderItem.setNumber(num);
+
+            insert(orderItem);
+            orderItemId = orderItem.getId();
+        }
+
+        return orderItemId;
     }
 
     @Override

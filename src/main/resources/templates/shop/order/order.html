@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('jishop')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let oiId = getUrlParams('oiId');
+
+        let vm = new Vue({
+            el: '#order',
+            data: {
+                url: 'data',
+                amount: 0,
+                orderItems: []
+            },
+            mounted: function () {
+                this.load();
+            },
+            methods: {
+                load: function () {
+                    axios.get(this.url + '/submitOrder', {
+                        params: {
+                            oiId: oiId
+                        }
+                    }).then((response) => {
+                        vm.amount = response.data.amount;
+                        vm.orderItems = response.data.orderItems;
+                    });
+                }
+            }
+
+        });
+    });
+</script>
+
+<div id="order">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- order -->
+    <div class="ji-order">
+        <form id="orderForm" action="createOrder" method="post" onsubmit="return doSubmit()">
+            <div class="ji-address">
+                <div class="ja-tip">住所を入力して下さい</div>
+
+                <div class="ja-detail">
+                    <div>
+                        <label for="address">住所<span>*</span></label>
+                        <textarea id="address" name="address" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="postCode">郵便番号<span>*</span></label>
+                        <input id="postCode" name="postCode" type="text" required>
+                    </div>
+
+                    <div>
+                        <label for="receiver">受取人<span>*</span></label>
+                        <input id="receiver" name="receiver" type="text" required>
+                    </div>
+
+                    <div>
+                        <label for="phoneNumber">電話番号<span>*</span></label>
+                        <input id="phoneNumber" name="phoneNumber" type="text" required>
+                    </div>
+
+                    <div>
+                        <label for="remark">備考欄</label>
+                        <textarea id="remark" name="remark"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ja-confirm" style="margin-top: 50px;">
+                <div class="ja-tip">オーダー確認</div>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">JI SHOP</th>
+                        <th>単価</th>
+                        <th>数</th>
+                        <th>金額</th>
+                        <th>配達方法</th>
+                    </tr>
+                    <tr class="ja-row">
+                        <td colspan="2"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="jo-item" v-for="orderItem in orderItems">
+                        <td>
+                            <img style="width:50px;"
+                                 :src="'img/single/' + orderItem.product.firstImage.name"
+                                 alt="暂无">
+                        </td>
+                        <td class="ad-info">
+                            <a :href="'products?pid=' + orderItem.product.id">{{ orderItem.product.name }}</a>
+                            <img title="クレジットカード" src="img/site/creditcard.png">
+                        </td>
+                        <td class="ji-column">
+                            <span>￥{{ orderItem.product.promotePrice }}</span>
+                        </td>
+                        <td class="ji-column">
+                            <span>{{ orderItem.number }}</span>
+                        </td>
+                        <td class="ji-column">
+                            <span>￥{{ (orderItem.product.promotePrice * orderItem.number) }}</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <label for="deliverType" class=""></label>
+                            <input id="deliverType" type="radio" checked="checked" value="">
+                            普通
+                            <select class="">
+                                <option>普通 無料</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="jo-sum clear-fix">
+                    <span class="float-right">合計  （運賃除く）: ￥{{ amount }}</span>
+                </div>
+
+                <div class="jo-total clear-fix">
+                    <div class="float-right">
+                        <span>金額：</span>
+                        <span class="total">￥{{ amount }}</span>
+                    </div>
+                </div>
+
+                <div class="">
+                    <input type="submit" class="float-right" value="オーダー提出"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

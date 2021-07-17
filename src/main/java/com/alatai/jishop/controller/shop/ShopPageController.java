@@ -68,4 +68,12 @@ public class ShopPageController {
     public String productsByKeyword() {
         return "shop/product/result";
     }
+
+    /**
+     * 结算页面
+     */
+    @GetMapping("/order")
+    public String order() {
+        return "shop/order/order";
+    }
 }

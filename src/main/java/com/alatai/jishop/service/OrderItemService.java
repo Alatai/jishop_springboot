@@ -19,6 +19,8 @@ public interface OrderItemService {
 
     List<OrderItem> findByProduct(Product product);
 
+    List<OrderItem> findByUser(User user);
+
     OrderItem insert(OrderItem orderItem);
 
     OrderItem update(OrderItem orderItem);
