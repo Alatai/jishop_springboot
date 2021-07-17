@@ -59,6 +59,9 @@ public class OrderController {
         return result;
     }
 
+    /**
+     * ショッピングカートに追加する
+     */
     @PostMapping("/add2Cart")
     public String add2Cart(HttpSession session, @RequestBody Map<String, Integer> params) {
         Integer pid = params.get("pid");
@@ -70,6 +73,9 @@ public class OrderController {
         return "success";
     }
 
+    /**
+     * ショッピングカートに移動する
+     */
     @GetMapping("/cart")
     public List<OrderItem> showCart(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -78,4 +84,38 @@ public class OrderController {
 
         return orderItems;
     }
+
+    @PostMapping("/updateCartItem")
+    public String updateCartItem(HttpSession session, @RequestBody Map<String, Integer> params) {
+        Integer id = params.get("id");
+        Integer num = params.get("num");
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            return "fail";
+        }
+
+        OrderItem orderItem = orderItemService.findById(id);
+        orderItem.setNumber(num);
+
+        orderItemService.update(orderItem);
+
+        return "success";
+    }
+
+    @PostMapping("/deleteCartItem")
+    public String deleteCartItem(HttpSession session, @RequestBody Map<String, Integer> params) {
+        Integer id = params.get("id");
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            return "fail";
+        }
+
+        orderItemService.deleteById(id);
+
+        return "success";
+    }
+
+
 }

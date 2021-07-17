@@ -23,8 +23,8 @@
 
                         // Vue是异步执行DOM更新的
                         // nextTick里面的代码会在DOM更新后执行
-                        vm.$nextTick(()=>{
-                            cartAction();
+                        vm.$nextTick(() => {
+                            handleCart();
                         });
                     });
                 }
@@ -32,7 +32,8 @@
         });
     });
 
-    function cartAction() {
+    // 购物车操作
+    function handleCart() {
         // 削除
         $('.deleteItem').click(function () {
             let id = $(this).data('id');
@@ -43,22 +44,15 @@
         // 削除確認
         $('#confirmBtn').click(function () {
             $('#deleteConfirm').modal('hide');
-
             // データベース更新
             let id = $('#deleteId').val();
 
-            $.ajax({
-                url: 'http://localhost:8080/jishop/order/deleteCartItem',
-                type: 'type',
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({'id': id}),
-                success: function (ret) {
-                    if ('success' === ret) {
-                        $('#orderItem' + id).remove();
-                        // $("#cartNum").html(${Session["cartNum"]} -1);
-                    } else {
-                        location.href = 'http://localhost:8080/jishop/user/login';
-                    }
+            axios.post('deleteCartItem', {'id': id}).then((response) => {
+                if (response.data === 'success') {
+                    $('#orderItem' + id).remove();
+                    // $("#cartNum").html(${Session["cartNum"]} -1);
+                } else {
+                    location.href = '../user/login';
                 }
             });
         });
@@ -158,7 +152,7 @@
             });
 
             params = params.substring(1);
-            location.href = "http://localhost:8080/jishop/order/submitOrder?" + params;
+            location.href = "submitOrder?" + params;
         });
     }
 
@@ -203,18 +197,9 @@
         $('#num' + id).val(num);
         $('#subtotal' + id).html('￥' + Number(price * num).toFixed(2));
 
-        // バックエンド
-        $.ajax({
-            url: 'http://localhost:8080/jishop/order/updateCartItem',
-            type: 'post',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({'id': id, 'num': num}),
-            success: function (ret) {
-                location.reload();
-
-                if ('success' !== ret) {
-                    location.href = 'http://localhost:8080/jishop/user/login';
-                }
+        axios.post('updateCartItem', {'id': id, 'num': num}).then((response) => {
+            if (response.data !== 'success') {
+                location.href = '../user/login';
             }
         });
     }
