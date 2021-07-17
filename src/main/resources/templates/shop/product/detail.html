@@ -86,13 +86,13 @@
 
         // ショッピングカート
         $('#add2Cart').click(function () {
-            axios.get('data/isLogin').then((response) => {
+            axios.get('user/isLogin').then((response) => {
                 if (response.data === 'success') {
                     let pid = vm.product.id;
                     let num = $('#purchaseNum').val();
                     let data = {'pid': pid, 'num': num};
 
-                    axios.post('data/add2Cart', data).then((response) => {
+                    axios.post('order/add2Cart', data).then((response) => {
                         if (response.data === 'success') {
                             $('#add2CartBtn').html('追加しました');
                             $('#add2CartBtn').attr('disabled', 'disabled');
@@ -111,14 +111,14 @@
 
         // すぐ購入する
         $('#buyCurrently').click(function () {
-            axios.get('data/isLogin').then((response) => {
+            axios.get('user/isLogin').then((response) => {
                 if (response.data === 'success') {
                     let pid = vm.product.id;
                     let num = $('#purchaseNum').val();
 
                     console.log(pid);
                     console.log(num);
-                    axios.get('data/buyCurrently', {
+                    axios.get('order/buyCurrently', {
                         params: {
                             pid: pid,
                             num: num
@@ -126,7 +126,7 @@
                     }).then((response) => {
                         console.log(response.data);
 
-                        location.href = "order?oiId=" + response.data;
+                        location.href = "account?oiId=" + response.data;
                     });
                 } else {
                     $('#loginModal').modal();
@@ -140,7 +140,7 @@
             let password = $('#password').val();
             let data = {'name': name, 'password': password};
 
-            axios.post('data/modalLogin', data).then((response) => {
+            axios.post('user/modalLogin', data).then((response) => {
                 if (response.data === 'success') {
                     location.reload();
                 } else {

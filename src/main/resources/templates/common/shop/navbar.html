@@ -17,10 +17,10 @@
 
         <span class="float-right">
             <a href="http://localhost:8080/jishop/orders">注文履歴</a>
-            <a href="http://localhost:8080/jishop/cart">
+            <a href="http://localhost:8080/jishop/order/mycart">
                 <i class="fas fa-shopping-cart"></i>
                 <span>
-                    カート <strong id="cartNum">${Session["cartNum"]}</strong> 件
+                    カート <strong id="cartNum" th:text="${session.cartNum}"></strong> 件
                 </span>
             </a>
         </span>

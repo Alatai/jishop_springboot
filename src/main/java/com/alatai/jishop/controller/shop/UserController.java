@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @SuppressWarnings("DuplicatedCode")
 @RestController("shopUserController")
-@RequestMapping("/data")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

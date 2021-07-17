@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-on="http://www.w3.org/1999/xhtml">
-<head th:replace="common/shop/header::header('jishop')">
+<head th:replace="common/shop/header::header('cart')">
 </head>
 <body>
 
@@ -10,7 +10,7 @@
         let vm = new Vue({
             el: '#orderItems',
             data: {
-                url: 'data/cart',
+                url: 'cart',
                 orderItems: []
             },
             mounted: function () {
@@ -254,12 +254,12 @@
                                :data-price="orderItem.product.promotePrice"
                                :data-num="orderItem.number">
                         <img style="width: 40px;"
-                             :src="'img/single/' + orderItem.product.firstImage.name"
+                             :src="'../img/single/' + orderItem.product.firstImage.name"
                              alt="暂无图片">
                     </td>
                     <td class="jic-info">
                         <a href="../product/detail?id=${orderItem.product.id}">{{ orderItem.product.name }}</a>
-                        <img title="クレジットカード支払い" src="img/site/creditcard.png">
+                        <img title="クレジットカード支払い" src="../img/site/creditcard.png">
                     </td>
                     <td>
                         <span class="jic-op">￥{{ orderItem.product.originalPrice }}</span>

@@ -72,7 +72,7 @@ public class ShopPageController {
     /**
      * 结算页面
      */
-    @GetMapping("/order")
+    @GetMapping("/account")
     public String order() {
         return "shop/order/order";
     }
@@ -80,7 +80,7 @@ public class ShopPageController {
     /**
      * 购物车页面
      */
-    @GetMapping("/cart")
+    @GetMapping("/order/mycart")
     public String cart() {
         return "shop/order/cart";
     }

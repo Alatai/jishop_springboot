@@ -20,7 +20,7 @@ import java.util.Map;
  * @date 2021/07/17 16:27
  */
 @RestController("shopOrderController")
-@RequestMapping("/data")
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -32,9 +32,6 @@ public class OrderController {
 
     @GetMapping("/buyCurrently")
     public int buyCurrently(HttpSession session, Integer pid, Integer num) {
-        System.out.println("pid=" + pid);
-        System.out.println("num=" + num);
-
         User user = (User) session.getAttribute("user");
 
         return orderItemService.checkOrderItem(user, pid, num);

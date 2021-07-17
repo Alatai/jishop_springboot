@@ -1,7 +1,11 @@
 package com.alatai.jishop.config;
 
+import com.alatai.jishop.interceptor.CartInterceptor;
+import com.alatai.jishop.interceptor.LoginInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -37,5 +41,27 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
                 .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*");
+    }
+
+    /**
+     * 用户登录拦截器
+     */
+    @Bean
+    public LoginInterceptor loginInterceptor() {
+        return new LoginInterceptor();
+    }
+
+    /**
+     * 购物车数量拦截器
+     */
+    @Bean
+    public CartInterceptor cartInterceptor(){
+        return new CartInterceptor();
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/order/*");
+        registry.addInterceptor(cartInterceptor()).addPathPatterns("/**");
     }
 }
