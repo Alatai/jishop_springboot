@@ -6,9 +6,7 @@ import com.alatai.jishop.service.OrderItemService;
 import com.alatai.jishop.service.OrderService;
 import com.alatai.jishop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -62,6 +60,17 @@ public class OrderController {
         result.put("orderItems", orderItems);
 
         return result;
+    }
+
+    @PostMapping("/add2Cart")
+    public String add2Cart(HttpSession session, @RequestBody Map<String, Integer> params) {
+        Integer pid = params.get("pid");
+        Integer num = params.get("num");
+        User user = (User) session.getAttribute("user");
+
+        orderItemService.checkOrderItem(user, pid, num);
+
+        return "success";
     }
 
 }
