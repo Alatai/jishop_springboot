@@ -76,4 +76,12 @@ public class ShopPageController {
     public String order() {
         return "shop/order/order";
     }
+
+    /**
+     * 购物车页面
+     */
+    @GetMapping("/cart")
+    public String cart() {
+        return "shop/order/cart";
+    }
 }

@@ -73,4 +73,12 @@ public class OrderController {
         return "success";
     }
 
+    @GetMapping("/cart")
+    public List<OrderItem> showCart(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        List<OrderItem> orderItems = orderItemService.findByUser(user);
+        productService.associateOrderItem(orderItems);
+
+        return orderItems;
+    }
 }
