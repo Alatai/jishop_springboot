@@ -53,8 +53,19 @@ public class ShopPageController {
         return "redirect:/index";
     }
 
+    /**
+     * 商品详情页
+     */
     @GetMapping("/products")
-    public String productDetail(){
+    public String productDetail() {
         return "shop/product/detail";
+    }
+
+    /**
+     * 商品搜索结果页
+     */
+    @GetMapping("/products/search")
+    public String productsByKeyword() {
+        return "shop/product/result";
     }
 }

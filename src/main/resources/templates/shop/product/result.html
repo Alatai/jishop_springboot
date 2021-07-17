@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('jishop')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let cid = getUrlParams('cid');
+        let keyword = getUrlParams('keyword');
+
+        console.log(cid);
+        console.log(keyword);
+
+        let vm = new Vue({
+            el: '#products',
+            data: {
+                url: '../data/',
+                pageResult: {},
+                product: {},
+                category: {}
+            },
+            mounted: function () {
+                this.list(0);
+            },
+            methods: {
+                list: function (start) {
+                    let url
+
+                    if (cid) {
+                        url = this.url + 'categories/' + cid + '/products';
+                    } else {
+                        url = this.url + 'products';
+                    }
+
+                    axios.get(url, {
+                        params: {
+                            keyword: keyword,
+                            start: start
+                        }
+                    }).then((response) => {
+                        vm.pageResult = response.data;
+                        vm.category = response.data.content[0].category;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                // 控制跳转页面
+                goPage: function (num) {
+                    if (num !== vm.pageResult.number) {
+                        this.list(num);
+                    }
+                },
+            }
+        });
+    });
+</script>
+
+<div id="products">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- search -->
+    <div th:replace="common/shop/search::search"></div>
+
+    <!-- result -->
+    <div class="jip-container clear-fix">
+        <div class="jip-item" v-for="product in pageResult.content">
+            <div class="jip-wrap">
+                <div class="jip-img">
+                    <a :href="'../products?pid=' + product.id">
+                        <img :src="'../img/single/' + product.firstImage.name"
+                             alt="">
+                    </a>
+                </div>
+                <p class="jip-price"><span>￥</span>{{ product.promotePrice }}</p>
+                <p class="jip-title">
+                    <a :href="'../products?pid=' + product.id">
+                        {{ product.name }}
+                    </a>
+                </p>
+                <p class="jip-info">
+                    <span>成交 <span>{{ product.saleCount }}</span></span>
+                    <span>评价 <span>{{ product.reviewCount }}</span></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- pageNav -->
+    <div th:replace="common/shop/pagenav::pagenav"></div>
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

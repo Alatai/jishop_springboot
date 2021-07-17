@@ -3,14 +3,13 @@ package com.alatai.jishop.controller.shop;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.PropertyValue;
 import com.alatai.jishop.entity.Review;
+import com.alatai.jishop.service.CategoryService;
 import com.alatai.jishop.service.ProductService;
 import com.alatai.jishop.service.PropertyValueService;
 import com.alatai.jishop.service.ReviewService;
+import com.alatai.jishop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,8 @@ public class ProductController {
     private PropertyValueService propertyValueService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/products/{id}")
     public Map<String, Object> productDetail(@PathVariable("id") Integer id) {
@@ -46,4 +47,27 @@ public class ProductController {
 
         return result;
     }
+
+    @GetMapping("/categories/{cid}/products")
+    public PageResult<Product> searchByCategory(@PathVariable("cid") Integer cid,
+                                                @RequestParam(value = "start", defaultValue = "0") Integer start,
+                                                @RequestParam(value = "size", defaultValue = "5") int size) {
+        start = start < 0 ? 0 : start;
+        PageResult<Product> pageResult = productService.findAll(cid, start, size, 5);
+        productService.associateFirstImage(pageResult.getContent());
+
+        return pageResult;
+    }
+
+    @GetMapping("/products")
+    public PageResult<Product> searchByKeyword(@RequestParam("keyword") String keyword,
+                                               @RequestParam(value = "start", defaultValue = "0") Integer start,
+                                               @RequestParam(value = "size", defaultValue = "5") int size) {
+        start = start < 0 ? 0 : start;
+        PageResult<Product> pageResult = productService.findByKeyword(keyword, start, size, 5);
+        productService.associateFirstImage(pageResult.getContent());
+
+        return pageResult;
+    }
+
 }

@@ -9,7 +9,7 @@
             <span><a href="javascript:"><i class="fas fa-shopping-cart"></i>スーパー</a></span>
             <span><a href="javascript:"><i class="fas fa-globe-asia"></i>国際</a></span>
             <span v-for="category in categories">
-                <a href="product/searchByCid?cid=${category.id}">
+                <a :href="'products/search?cid=' + category.id">
                     {{ category.name }}
                 </a>
             </span>

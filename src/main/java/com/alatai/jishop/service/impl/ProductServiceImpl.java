@@ -50,6 +50,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public PageResult<Product> findByKeyword(String keyword, Integer start, Integer size, Integer displayPages) {
+        Pageable pageable = PageRequest.of(start, size);
+        Page<Product> page = productDao.findByNameLike("%" + keyword + "%", pageable);
+
+        return new PageResult<>(page, displayPages);
+    }
+
+    @Override
     public List<Product> findByCategory(Category category) {
         return productDao.findByCategory(category);
     }

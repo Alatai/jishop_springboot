@@ -17,6 +17,8 @@ public interface ProductService {
 
     PageResult<Product> findAll(Integer cid, Integer start, Integer size, Integer displayPages);
 
+    PageResult<Product> findByKeyword(String keyword, Integer start, Integer size, Integer displayPages);
+
     List<Product> findByCategory(Category category);
 
     Product findById(Integer id);
