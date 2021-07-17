@@ -12,22 +12,29 @@
         let vm = new Vue({
             el: '#order',
             data: {
-                url: 'data',
                 amount: 0,
-                orderItems: []
+                orderItems: [],
+                order: {}
             },
             mounted: function () {
                 this.load();
             },
             methods: {
                 load: function () {
-                    axios.get(this.url + '/submitOrder', {
+                    axios.get('submitOrder', {
                         params: {
                             oiId: oiId
                         }
                     }).then((response) => {
                         vm.amount = response.data.amount;
                         vm.orderItems = response.data.orderItems;
+                    });
+                },
+                submit: function () {
+                    axios.post('createOrder', this.order).then((response) => {
+                        if (response.data.id) {
+                            location.href = 'pay';
+                        }
                     });
                 }
             }
@@ -42,34 +49,34 @@
 
     <!-- order -->
     <div class="ji-order">
-        <form id="orderForm" action="createOrder" method="post" onsubmit="return doSubmit()">
+        <form id="orderForm">
             <div class="ji-address">
                 <div class="ja-tip">住所を入力して下さい</div>
 
                 <div class="ja-detail">
                     <div>
                         <label for="address">住所<span>*</span></label>
-                        <textarea id="address" name="address" required></textarea>
+                        <textarea id="address" name="address" required v-model="order.address"></textarea>
                     </div>
 
                     <div>
                         <label for="postCode">郵便番号<span>*</span></label>
-                        <input id="postCode" name="postCode" type="text" required>
+                        <input id="postCode" name="postCode" type="text" required v-model="order.postCode">
                     </div>
 
                     <div>
                         <label for="receiver">受取人<span>*</span></label>
-                        <input id="receiver" name="receiver" type="text" required>
+                        <input id="receiver" name="receiver" type="text" required v-model="order.receiver">
                     </div>
 
                     <div>
                         <label for="phoneNumber">電話番号<span>*</span></label>
-                        <input id="phoneNumber" name="phoneNumber" type="text" required>
+                        <input id="phoneNumber" name="phoneNumber" type="text" required v-model="order.phoneNumber">
                     </div>
 
                     <div>
                         <label for="remark">備考欄</label>
-                        <textarea id="remark" name="remark"></textarea>
+                        <textarea id="remark" name="remark" v-model="order.remark"></textarea>
                     </div>
                 </div>
             </div>
@@ -98,12 +105,12 @@
                     <tr class="jo-item" v-for="orderItem in orderItems">
                         <td>
                             <img style="width:50px;"
-                                 :src="'img/single/' + orderItem.product.firstImage.name"
+                                 :src="'../img/single/' + orderItem.product.firstImage.name"
                                  alt="暂无">
                         </td>
                         <td class="ad-info">
-                            <a :href="'products?pid=' + orderItem.product.id">{{ orderItem.product.name }}</a>
-                            <img title="クレジットカード" src="img/site/creditcard.png">
+                            <a :href="'../products?pid=' + orderItem.product.id">{{ orderItem.product.name }}</a>
+                            <img title="クレジットカード" src="../img/site/creditcard.png">
                         </td>
                         <td class="ji-column">
                             <span>￥{{ orderItem.product.promotePrice }}</span>
@@ -138,7 +145,9 @@
                 </div>
 
                 <div class="">
-                    <input type="submit" class="float-right" value="オーダー提出"/>
+                    <button class="float-right" type="button" v-on:click="submit()">
+                        オーダー提出
+                    </button>
                 </div>
             </div>
         </form>

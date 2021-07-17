@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div>
+    <div class="ji-container ji-pay">
+        <div>
+            <div>
+                <span>未払い金額：</span>
+                <span class="jip-amount">￥${order.amount?string("0.00")}</span>
+            </div>
+
+            <div>
+                <a href="hasPaid?id=${order.id}">
+                    <button>支払い確認</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

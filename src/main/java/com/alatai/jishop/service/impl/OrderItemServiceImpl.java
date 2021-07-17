@@ -47,7 +47,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> findByUser(User user) {
-        return orderItemDao.findByUser(user);
+        return orderItemDao.findByUserAndOrderIsNull(user);
     }
 
     @Override

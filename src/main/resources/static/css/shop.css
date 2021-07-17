@@ -809,7 +809,7 @@ button, input, textarea, select, a {
     color: #e61717;
 }
 
-.ji-order input[type="submit"] {
+.ji-order button[type="button"] {
     float: right;
     display: inline-block;
     width: 180px;

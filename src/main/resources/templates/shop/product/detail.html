@@ -126,7 +126,7 @@
                     }).then((response) => {
                         console.log(response.data);
 
-                        location.href = "account?oiId=" + response.data;
+                        location.href = "order/account?oiId=" + response.data;
                     });
                 } else {
                     $('#loginModal').modal();

@@ -1,5 +1,6 @@
 package com.alatai.jishop.controller.shop;
 
+import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.OrderItemService;
@@ -117,5 +118,18 @@ public class OrderController {
         return "success";
     }
 
+    /**
+     * オーダーの生成、状態付け（waitPay）
+     */
+    @PostMapping("/createOrder")
+    public Order createOrder(HttpSession session, @RequestBody Order order) {
+        User user = (User) session.getAttribute("user");
+        List<OrderItem> orderItems = (List<OrderItem>) session.getAttribute("orderItems");
+        session.removeAttribute("orderItems");
+
+        order.setUser(user);
+
+        return orderService.createOrder(order, orderItems);
+    }
 
 }

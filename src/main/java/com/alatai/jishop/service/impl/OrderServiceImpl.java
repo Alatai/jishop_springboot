@@ -3,6 +3,7 @@ package com.alatai.jishop.service.impl;
 import com.alatai.jishop.dao.OrderDao;
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
+import com.alatai.jishop.service.OrderItemService;
 import com.alatai.jishop.service.OrderService;
 import com.alatai.jishop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Alatai
@@ -24,6 +28,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private OrderItemService orderItemService;
 
     @Override
     public List<Order> findAll() {
@@ -74,9 +80,31 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    // 添加事务
+    @Transactional(propagation= Propagation.REQUIRED,rollbackForClassName="Exception")
     @Override
     public Order createOrder(Order order, List<OrderItem> orderItems) {
-        return null;
+        String orderCode = UUID.randomUUID().toString().replace("-", "");
+
+        order.setStatus(WAIT_PAY);
+        order.setOrderCode(orderCode);
+        order.setCreatedDate(new Date());
+
+        insert(order);
+
+        float amount = 0;
+
+        // オーダーとオーダー詳細を関連する、総金額計算
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setOrder(order);
+            orderItemService.update(orderItem);
+
+            amount += orderItem.getProduct().getPromotePrice() * orderItem.getNumber();
+        }
+
+        order.setAmount(amount);
+
+        return order;
     }
 
     @Override
