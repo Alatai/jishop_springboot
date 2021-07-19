@@ -109,7 +109,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:">すべての分類</a></li>
                     <li class="breadcrumb-item"><a
-                            href="/jishop/admin/product/list?cid=${category.id}">{{ category.name }}</a>
+                            :href="'products?cid=' + category.id">{{ category.name }}</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="javascript:">
