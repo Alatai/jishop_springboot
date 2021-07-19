@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Alatai
+ * Shiro設定
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 20:46
  */
@@ -19,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroConfiguration {
 
     /**
-     * 配置LifecycleBeanPostProcessor，保证实现了Shiro内部lifecycle函数的bean执行
+     * LifecycleBeanPostProcessor設定
      */
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -27,7 +29,7 @@ public class ShiroConfiguration {
     }
 
     /**
-     * 配置shiroFilter工厂类，id要和web.xml中配置的过滤器一致
+     * ShiroFilterFactory設定
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SessionsSecurityManager sessionsSecurityManager) {
@@ -37,7 +39,7 @@ public class ShiroConfiguration {
     }
 
     /**
-     * 配置SecurityManager
+     * SecurityManager設定
      */
     @Bean
     public SessionsSecurityManager sessionsSecurityManager() {
@@ -47,7 +49,7 @@ public class ShiroConfiguration {
     }
 
     /**
-     * 配置Realm
+     * Realm設定
      */
     @Bean
     public UserRealm getUserRealm() {
@@ -57,20 +59,20 @@ public class ShiroConfiguration {
     }
 
     /**
-     * 配置HashedCredentialsMatcher
+     * HashedCredentialsMatcher設定
      */
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        // 加密算法
+        // 暗号化アルゴリズム
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
-        // 加密次数
+        // 暗号化回数
         hashedCredentialsMatcher.setHashIterations(2);
         return hashedCredentialsMatcher;
     }
 
     /**
-     * 启用shiro注解
+     * Shiroアノデーション設定
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SessionsSecurityManager sessionsSecurityManager) {

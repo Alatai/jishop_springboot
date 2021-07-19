@@ -10,7 +10,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
- * @author Alatai
+ * MVC設定
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/14 11:12
  */
@@ -18,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class MvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
-     * 静态资源设置
+     * 静的な資源
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -29,14 +31,12 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     /**
-     * 跨域访问设置
-     * 浏览器同源策略（Same-Origin Policy)
-     * 默认情况下，AJAX请求只能发送给同源的URL
-     * 同源：协议、域名、端口相同
+     * Cross-origin-resource-sharing（オリジン間リソース共有）設定
+     * same protocol, domain-name and port（プロトコル、ドメイン、ポート番号）
      */
     @Override
     protected void addCorsMappings(CorsRegistry registry) {
-        // 允许所有请求跨域访问
+        // すべての請求を許可する
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
@@ -44,7 +44,7 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     /**
-     * 用户登录拦截器
+     * ユーザ登録インターセプター
      */
     @Bean
     public LoginInterceptor loginInterceptor() {
@@ -52,19 +52,21 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     /**
-     * 购物车数量拦截器
+     * ショッピングカートインターセプター
      */
     @Bean
-    public CartInterceptor cartInterceptor(){
+    public CartInterceptor cartInterceptor() {
         return new CartInterceptor();
     }
 
     /**
-     * 拦截路径设置
+     * インターセプターパス設定
      */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/order/*").addPathPatterns("/review/*");
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/order/*")
+                .addPathPatterns("/review/*");
         registry.addInterceptor(cartInterceptor()).addPathPatterns("/**");
     }
 }

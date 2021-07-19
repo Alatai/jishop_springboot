@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @author Alatai
+ * ReviewDao
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/17 10:47
  */

@@ -7,12 +7,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Alatai
+ * Category
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/12 17:54
  */
 @Entity
 @Table(name = "Category")
+// リターンのJSONタイプデータ中に、以下のフィールドを排除する
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class Category implements Serializable {
 

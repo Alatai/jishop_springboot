@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Alatai
+ * UserController
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 10:36
  */

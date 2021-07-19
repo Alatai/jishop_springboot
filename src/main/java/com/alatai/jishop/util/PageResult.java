@@ -5,30 +5,30 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * 分页结果集，对spring.jpa的Page进行封装
+ * ページナビ結果、spring.jpaのPageのカプセル
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/14 16:27
  */
 public class PageResult<T> {
 
     private Page<T> page;
-    // 显示页码数
+    // ページの数
     // e.g. 1 2 3 currentPage 5 6 7
     private Integer displayPages;
     private Integer[] displayNums;
 
-    private Integer totalPages; // 总页数
-    private Integer number; // 当前页码
-    private long totalElements; // 总条数
-    private Integer size; // 当前页面大小
-    private Integer numberOfElements; // 当前页面查询条数
-    private List<T> content; // 查询结果集
-    private boolean isFirst; // 是否为第一页
-    private boolean isLast; // 是否为最后一页
-    private boolean hasNext; // 是否有下一页
-    private boolean hasPrevious; // 是否有上一页
+    private Integer totalPages; // ページ総数
+    private Integer number; // カレントページナンバー
+    private long totalElements; // データ総数
+    private Integer size; // ページで表示するデータの数
+    private Integer numberOfElements; // カレントページ
+    private List<T> content; // 結果リスト
+    private boolean isFirst; // トップページ
+    private boolean isLast; // ラストページ
+    private boolean hasNext; // 次ページあるかどうか
+    private boolean hasPrevious; // 前ページあるかどうか
 
     public PageResult() {
     }
@@ -52,19 +52,19 @@ public class PageResult<T> {
     }
 
     /**
-     * 计算显示页码数
+     * 表示できるページ数の計算
      */
     private void calcDisplayPages() {
         Integer[] displayNums;
 
-        // 总页数 <= 需要显示的页数
+        // ページ総数 <= ページの数
         if (totalPages <= displayPages) {
             displayNums = new Integer[totalPages];
 
             for (int i = 0; i < totalPages; i++) {
                 displayNums[i] = i + 1;
             }
-        } else { // 总页数 > 需要显示的页数
+        } else { // ページ総数 > ページの数
             displayNums = new Integer[displayPages];
             int start = number - displayPages / 2;
             int end = number + displayPages / 2;

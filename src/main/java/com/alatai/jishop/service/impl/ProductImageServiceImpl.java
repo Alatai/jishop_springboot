@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author Alatai
+ * ProductImageService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 14:54
  */

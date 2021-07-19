@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @author Alatai
+ * OrderItemDao
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 11:37
  */

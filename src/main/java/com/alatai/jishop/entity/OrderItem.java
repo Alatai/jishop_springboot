@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Alatai
+ * OrderItem
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 11:25
  */
@@ -16,7 +18,7 @@ import java.io.Serializable;
 public class OrderItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

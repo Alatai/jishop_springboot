@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Alatai
+ * PropertyController
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 10:00
  */

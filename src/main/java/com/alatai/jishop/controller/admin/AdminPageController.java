@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 处理页面跳转
+ * 管理サイト表示ページ遷移
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/14 11:46
  */
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminPageController {
 
     /**
-     * 管理首页
+     * 管理サイトホームページ
      */
     @GetMapping
     public String admin() {
@@ -24,7 +24,7 @@ public class AdminPageController {
     }
 
     /**
-     * 分类页
+     * 分類ページ
      */
     @GetMapping("/categories")
     public String listCategories() {
@@ -32,7 +32,7 @@ public class AdminPageController {
     }
 
     /**
-     * 属性页
+     * 属性ページ
      */
     @GetMapping("/properties")
     public String listProperties() {
@@ -40,7 +40,7 @@ public class AdminPageController {
     }
 
     /**
-     * 商品页
+     * 商品ページ
      */
     @GetMapping("/products")
     public String listProducts() {
@@ -48,7 +48,7 @@ public class AdminPageController {
     }
 
     /**
-     * 商品图片页
+     * 商品写真ページ
      */
     @GetMapping("/images")
     public String listProductImages() {
@@ -56,7 +56,7 @@ public class AdminPageController {
     }
 
     /**
-     * 属性值编辑页面
+     * 属性編集ページ
      */
     @GetMapping("/pvalues")
     public String listPropertyValues() {
@@ -64,7 +64,7 @@ public class AdminPageController {
     }
 
     /**
-     * 用户页面
+     * ユーザページ
      */
     @GetMapping("/users")
     public String listUsers() {
@@ -72,7 +72,7 @@ public class AdminPageController {
     }
 
     /**
-     * 订单页面
+     * オーダーページ
      */
     @GetMapping("/orders")
     public String listOrders() {

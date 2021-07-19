@@ -1,6 +1,5 @@
 package com.alatai.jishop.controller.shop;
 
-import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
 import com.alatai.jishop.entity.Review;
 import com.alatai.jishop.entity.User;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 /**
- * @author Alatai
+ * ReviewController
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/19 9:55
  */
@@ -48,7 +48,6 @@ public class ReviewController {
         Integer oid = reviews.get(0).getOid();
 
         reviewService.insertReviews(reviews, user);
-
         orderService.hasReviewed(oid);
 
         return "success";

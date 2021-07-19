@@ -1,13 +1,14 @@
 package com.alatai.jishop.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Alatai
+ * ProductImage
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 14:33
  */
@@ -26,8 +27,7 @@ public class ProductImage implements Serializable {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="pid")
-    // @JsonBackReference // 避免双向引用导致的无限递归
+    @JoinColumn(name = "pid")
     private Product product;
 
     public Integer getId() {

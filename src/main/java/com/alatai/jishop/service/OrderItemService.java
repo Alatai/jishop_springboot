@@ -5,7 +5,9 @@ import com.alatai.jishop.entity.*;
 import java.util.List;
 
 /**
- * @author Alatai
+ * OrderItemService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 11:45
  */

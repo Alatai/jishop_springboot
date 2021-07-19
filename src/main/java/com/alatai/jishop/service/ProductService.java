@@ -8,7 +8,9 @@ import com.alatai.jishop.util.PageResult;
 import java.util.List;
 
 /**
- * @author Alatai
+ * ProductService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 13:34
  */
@@ -40,17 +42,17 @@ public interface ProductService {
     void fillRows(List<Category> categories);
 
     /**
-     * 关联对应分类
+     * 商品と商品分類を関連する
      */
     void associateCategory(List<Category> categories);
 
     /**
-     * 结算页面关联订单详情
+     * 会計ページ、オーダー詳細を関連する
      */
     void associateOrderItem(List<OrderItem> orderItems);
 
     /**
-     * 准备商品详情页信息
+     * 商品詳細ページのデータ
      */
     Product productDetail(Product product);
 }

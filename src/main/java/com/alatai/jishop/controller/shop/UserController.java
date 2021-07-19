@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * @author Alatai
+ * UserController
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 20:25
  */
@@ -29,7 +31,6 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody User user) {
         String name = user.getName();
-        // 去除空白/特殊符号转义
         name = HtmlUtils.htmlEscape(name);
 
         boolean isExist = userService.isExist(name);

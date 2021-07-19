@@ -7,7 +7,9 @@ import com.alatai.jishop.util.PageResult;
 import java.util.List;
 
 /**
- * @author Alatai
+ * PropertyService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 9:47
  */

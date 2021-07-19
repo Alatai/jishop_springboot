@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Alatai
+ * Product
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 12:27
  */
@@ -35,10 +37,10 @@ public class Product implements Serializable {
     private Date createdDate;
 
     @ManyToOne
-    @JoinColumn(name="cid")
+    @JoinColumn(name = "cid")
     private Category category;
 
-    @Transient // 不存到数据库中，仅做临时变量
+    @Transient // 臨時の変数、データベースに書き込まない
     private ProductImage firstImage;
 
     @Transient

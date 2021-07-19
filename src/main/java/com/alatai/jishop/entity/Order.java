@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Alatai
+ * Order
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 11:30
  */
@@ -44,7 +46,7 @@ public class Order implements Serializable {
     private Date confirmedDate;
 
     @ManyToOne
-    @JoinColumn(name="uid")
+    @JoinColumn(name = "uid")
     private User user;
 
     private String status;

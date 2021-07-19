@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Shiroフレームワークで、ユーザのパスワードを暗号化する
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 20:43
  */

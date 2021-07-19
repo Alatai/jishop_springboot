@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @author Alatai
+ * PropertyValueDao
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 21:45
  */

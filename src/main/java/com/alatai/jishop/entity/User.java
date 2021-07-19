@@ -6,14 +6,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Alatai
+ * User
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 10:04
  */
 
 @Entity
 @Table(name = "User")
-@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class User implements Serializable {
 
     @Id

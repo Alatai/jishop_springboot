@@ -18,7 +18,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Alatai
+ * ProductService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 13:35
  */

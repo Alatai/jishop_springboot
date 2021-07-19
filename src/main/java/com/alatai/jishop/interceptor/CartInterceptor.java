@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * ショッピングカートの商品数など
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/17 21:35
  */

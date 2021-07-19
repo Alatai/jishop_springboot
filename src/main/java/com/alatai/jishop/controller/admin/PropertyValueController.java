@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author Alatai
+ * PropertyValueController
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 22:07
  */

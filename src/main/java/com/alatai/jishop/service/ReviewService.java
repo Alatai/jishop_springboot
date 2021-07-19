@@ -7,7 +7,9 @@ import com.alatai.jishop.entity.User;
 import java.util.List;
 
 /**
- * @author Alatai
+ * ReviewService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/17 10:52
  */

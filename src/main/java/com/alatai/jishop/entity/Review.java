@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Alatai
+ * Review
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/17 10:44
  */
@@ -26,11 +28,11 @@ public class Review implements Serializable {
     private Date createdDate;
 
     @ManyToOne
-    @JoinColumn(name="uid")
+    @JoinColumn(name = "uid")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="pid")
+    @JoinColumn(name = "pid")
     private Product product;
 
     @Transient

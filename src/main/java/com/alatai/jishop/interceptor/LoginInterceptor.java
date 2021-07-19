@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 /**
  * ログインインターセプター
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/17 21:09
  */

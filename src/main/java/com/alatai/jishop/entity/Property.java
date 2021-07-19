@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Alatai
+ * Property
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 9:34
  */

@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @author Alatai
+ * ProductImageService
+ *
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/15 14:49
  */

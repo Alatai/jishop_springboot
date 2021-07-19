@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 处理前台页面跳转
+ * 一般的なユーザ向け、表示ページ遷移
  *
- * @author Alatai
+ * @author M20W0324 saihou
  * @version 1.0
  * @date 2021/07/16 15:50
  */
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ShopPageController {
 
     /**
-     * 首页
+     * ホームページ
      */
     @GetMapping("/index")
     public String index() {
@@ -24,7 +24,7 @@ public class ShopPageController {
     }
 
     /**
-     * 注册页面
+     * 新規登録ページ
      */
     @GetMapping("/register")
     public String register() {
@@ -32,7 +32,7 @@ public class ShopPageController {
     }
 
     /**
-     * 登录页面
+     * ログインページ
      */
     @GetMapping("/login")
     public String login() {
@@ -40,7 +40,7 @@ public class ShopPageController {
     }
 
     /**
-     * 退出登录，跳转到首页
+     * ログアウトして，ホームページに戻る
      */
     @GetMapping("/logout")
     public String logout() {
@@ -54,7 +54,7 @@ public class ShopPageController {
     }
 
     /**
-     * 商品详情页
+     * 商品詳細ページ
      */
     @GetMapping("/products")
     public String productDetail() {
@@ -62,7 +62,7 @@ public class ShopPageController {
     }
 
     /**
-     * 商品搜索结果页
+     * 商品検索結果ページ
      */
     @GetMapping("/products/search")
     public String productsByKeyword() {
@@ -70,7 +70,7 @@ public class ShopPageController {
     }
 
     /**
-     * 结算页面
+     * 会計ページ
      */
     @GetMapping("/order/account")
     public String order() {
@@ -78,7 +78,7 @@ public class ShopPageController {
     }
 
     /**
-     * 购物车页面
+     * ショッピングカートページ
      */
     @GetMapping("/order/mycart")
     public String cart() {
@@ -86,7 +86,7 @@ public class ShopPageController {
     }
 
     /**
-     * 支付页面
+     * 支払いページ
      */
     @GetMapping("/order/payment")
     public String pay() {
@@ -94,7 +94,7 @@ public class ShopPageController {
     }
 
     /**
-     * 完成支付页面
+     * 支払い成功ページ
      */
     @GetMapping("/order/hasPaid")
     public String hasPaid() {
@@ -102,7 +102,7 @@ public class ShopPageController {
     }
 
     /**
-     * 所有订单页面
+     * ユーザオーダーページ（該当ユーザ、すべてのオーダー）
      */
     @GetMapping("/order/orders")
     public String orders() {
@@ -110,7 +110,7 @@ public class ShopPageController {
     }
 
     /**
-     * 商品评价页面
+     * 商品評価ページ
      */
     @GetMapping("/review/myreview")
     public String reviews() {
