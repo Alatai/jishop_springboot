@@ -1,5 +1,6 @@
-<div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-     th:fragment="deleteModal">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     th:fragment="deleteModal"
+     xmlns:v-on="http://www.w3.org/1999/xhtml">
     <input type="hidden" id="deleteId" value="">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -14,7 +15,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
-                <button type="button" class="btn btn-primary" id="confirmBtn">削除</button>
+                <button type="button" class="btn btn-primary" v-on:click="remove()">削除</button>
             </div>
         </div>
     </div>

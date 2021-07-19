@@ -165,4 +165,12 @@ public class OrderController {
     public void confirmOrder(Integer id) {
         orderService.confirmOrder(id);
     }
+
+    /**
+     * オーダー削除、状態変更（delete）
+     */
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable("id") Integer id) {
+        orderService.deleteOrder(id);
+    }
 }

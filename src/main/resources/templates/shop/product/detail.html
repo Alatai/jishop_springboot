@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-on="http://www.w3.org/1999/xhtml">
-<head th:replace="common/shop/header::header('jishop')">
+<head th:replace="common/shop/header::header('productDetail')">
 </head>
 <body>
 
@@ -19,13 +19,12 @@
                 detailSwitch: true,
                 reviewSwitch: false
             },
-            created: function () {
+            mounted: function () {
                 this.load();
             },
             methods: {
                 load: function () {
                     axios.get(this.url + "/" + pid).then((response) => {
-                        console.log(response.data);
                         vm.product = response.data.product;
                         vm.propertyValues = response.data.propertyValues;
                         vm.reviews = response.data.reviews;
@@ -41,6 +40,17 @@
                     vm.reviewSwitch = true;
                 }
             }
+        });
+
+        // 日期格式处理
+        Vue.filter('formatDateFilter', function (dateValue, formatString) {
+            if (null == dateValue) {
+                return "";
+            }
+
+            formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+
+            return moment(dateValue).format(formatString);
         });
 
         let stock = vm.product.stock;
@@ -249,8 +259,8 @@
             <div class="jir-content" v-for="review in reviews" v-show="reviewSwitch">
                 <div class="jir-item clear-fix">
                     <div class="jir-info">
-                        <div class="jir-desc">{{ review.content }}</div>
-                        <div class="jir-date">{{ review.createdDate }}</div>
+                        <div class="jir-desc">{{ review.content | formatDateFilter }}</div>
+                        <div class="jir-date">{{ review.createdDate | formatDateFilter }}</div>
                     </div>
                     <div class="jir-user">
                         {{ review.user.name }}

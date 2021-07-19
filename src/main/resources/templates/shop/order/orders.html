@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-on="http://www.w3.org/1999/xhtml">
-<head th:replace="common/shop/header::header('jishop')">
+<head th:replace="common/shop/header::header('ユーザオーダー')">
 </head>
 <body>
 
@@ -11,7 +11,8 @@
             el: '#orders',
             data: {
                 url: 'myorders',
-                orders: []
+                orders: [],
+                deleteOrder: {}
             },
             mounted: function () {
                 this.load();
@@ -33,6 +34,16 @@
                         }
                     }).then(() => {
                         this.load();
+                    });
+                },
+                openDeleteModal: function (id) {
+                    this.deleteOrder.id = id;
+                    $('#deleteModal').modal();
+                },
+                remove: function () {
+                    axios.delete(this.deleteOrder.id).then(() => {
+                        $('#deleteModal').modal('hide');
+                        vm.load();
                     });
                 }
             }
@@ -96,7 +107,9 @@
                     <td></td>
                     <td></td>
                     <td class="jio-delete">
-                        <a href="delete?id=${order.id}"><i class="fas fa-trash-alt"></i></a>
+                        <a href="javascript:" v-on:click="openDeleteModal(order.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                     </td>
                 </tr>
 
@@ -147,6 +160,8 @@
         </div>
     </div>
 
+    <!-- deleteModal -->
+    <div th:replace="shop/order/deleteModal::deleteModal"></div>
     <!-- footer -->
     <div th:replace="common/shop/footer::footer"></div>
 </div>
