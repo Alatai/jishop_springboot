@@ -31,6 +31,11 @@ public class ProductController {
         return pageResult;
     }
 
+    @GetMapping("/products/{id}")
+    public Product getOne(@PathVariable("id") Integer id) {
+        return productService.findById(id);
+    }
+
     @PostMapping("/products")
     public void add(@RequestBody Product product) {
         productService.insert(product);

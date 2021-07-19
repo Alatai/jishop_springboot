@@ -259,7 +259,7 @@
             <div class="jir-content" v-for="review in reviews" v-show="reviewSwitch">
                 <div class="jir-item clear-fix">
                     <div class="jir-info">
-                        <div class="jir-desc">{{ review.content | formatDateFilter }}</div>
+                        <div class="jir-desc">{{ review.content }}</div>
                         <div class="jir-date">{{ review.createdDate | formatDateFilter }}</div>
                     </div>
                     <div class="jir-user">

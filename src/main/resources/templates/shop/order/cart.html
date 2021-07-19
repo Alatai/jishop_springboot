@@ -27,6 +27,19 @@
                             handleCart();
                         });
                     });
+                },
+                remove: function () {
+                    let id = $('#deleteId').val();
+                    axios.post('deleteCartItem',
+                        {'id': id}).then((response) => {
+                        if (response.data === 'success') {
+                            $('#orderItem' + id).remove();
+                            $('#deleteModal').modal('hide');
+                            vm.load();
+                        } else {
+                            location.href = '../user/login';
+                        }
+                    });
                 }
             }
         });
@@ -38,23 +51,7 @@
         $('.deleteItem').click(function () {
             let id = $(this).data('id');
             $('#deleteId').val(id);
-            $('#deleteConfirm').modal();
-        });
-
-        // 削除確認
-        $('#confirmBtn').click(function () {
-            $('#deleteConfirm').modal('hide');
-            // データベース更新
-            let id = $('#deleteId').val();
-
-            axios.post('deleteCartItem', {'id': id}).then((response) => {
-                if (response.data === 'success') {
-                    $('#orderItem' + id).remove();
-                    // $("#cartNum").html(${Session["cartNum"]} -1);
-                } else {
-                    location.href = '../user/login';
-                }
-            });
+            $('#deleteModal').modal();
         });
 
         // すべてを選択する
@@ -288,6 +285,8 @@
     </div>
 
     <!-- loginModal -->
+    <div th:replace="shop/order/deleteModal::deleteModal"></div>
+    <!-- deleteModal -->
     <div th:replace="shop/order/deleteModal::deleteModal"></div>
     <!-- footer -->
     <div th:replace="common/shop/footer::footer"></div>

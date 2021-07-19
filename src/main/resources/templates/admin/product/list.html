@@ -19,6 +19,7 @@
             },
             mounted: function () {
                 this.list(0);
+                this.getCategory();
             },
             methods: {
                 list: function (start) {
@@ -29,10 +30,15 @@
                         }
                     }).then((response) => {
                         vm.pageResult = response.data;
-                        vm.category = response.data.content[0].category;
                     }).catch(function (error) {
                         console.log(error);
                     });
+                },
+                getCategory: function () {
+                    axios.get(this.url + 'categories/' + cid)
+                        .then((response) => {
+                            vm.category = response.data;
+                        });
                 },
                 goPage: function (num) {
                     if (num !== vm.pageResult.number) {
@@ -79,6 +85,13 @@
                 },
             }
         });
+
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
+        });
     });
 </script>
 
@@ -124,12 +137,12 @@
                 <tr v-for="product in pageResult.content">
                     <td>{{ product.id }}</td>
                     <td>
-                        <img style="width: 50px;"
+                        <img style="width: 50px;" v-if="product.firstImage"
                              :src="'../img/single/' + product.firstImage.name"
                              alt="暂无图片">
                     </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.subtitle }}</td>
+                    <td>{{ product.name | strFormat(0, 15) }}</td>
+                    <td>{{ product.subtitle | strFormat(0, 15) }}</td>
                     <td>{{ product.originalPrice }}</td>
                     <td>{{ product.promotePrice }}</td>
                     <td>{{ product.stock }}</td>

@@ -19,13 +19,19 @@
                 // 加载数据
                 list: function () {
                     axios.get('data/index').then((response) => {
-                        console.log(response.data);
                         vm.categories = response.data;
                     }).catch(function (error) {
                         console.log(error);
                     });
                 },
             }
+        });
+
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
         });
     });
 </script>
@@ -46,13 +52,13 @@
             <div class="left-mark"></div>
             <span class="c-title clear-fix">{{ category.name }}</span>
 
-            <div class="p-item" v-for="product in category.products">
+            <div class="p-item" v-for="product, index in category.products" v-if="index < 5">
                 <a :href="'products?pid=' + product.id">
                     <img :src="'img/single/' + product.firstImage.name"
                          alt="写真なし">
                 </a>
                 <a class="pd-link" :href="'products?pid=' + product.id">
-                    <span class="p-desc">[人気]{{ product.name }}</span>
+                    <span class="p-desc">[人気]{{ product.name | strFormat(0, 20) }}</span>
                 </a>
                 <span class="p-price">￥{{ product.promotePrice }}</span>
             </div>

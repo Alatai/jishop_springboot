@@ -62,6 +62,13 @@
                 });
             });
         }
+
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
+        });
     });
 </script>
 
@@ -80,12 +87,12 @@
             <ul>
                 <li class="clear-fix" v-for="orderItem in orderItems">
                     <div class="jir-product">
-                        <a href="../product/detail?id=${orderItem.product.id}">
+                        <a :href="'../products?pid=' + orderItem.product.id">
                             <img style="width: 200px; height: 130px;"
                                  :src="'../img/single/' + orderItem.product.firstImage.name"
                                  alt="暂无图片">
                         </a>
-                        <span style="position: relative; left: 100px;">{{ orderItem.product.name }}</span>
+                        <span style="position: relative; left: 100px;">{{ orderItem.product.name | strFormat(0, 8) }}</span>
                     </div>
 
                     <div class="jir-main">

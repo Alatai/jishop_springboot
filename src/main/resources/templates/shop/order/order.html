@@ -21,14 +21,11 @@
             },
             methods: {
                 load: function () {
-                    axios.get('submitOrder', {
-                        params: {
-                            oiId: oiId
-                        }
-                    }).then((response) => {
-                        vm.amount = response.data.amount;
-                        vm.orderItems = response.data.orderItems;
-                    });
+                    axios.get('submitOrder?oiId=' + oiId)
+                        .then((response) => {
+                            vm.amount = response.data.amount;
+                            vm.orderItems = response.data.orderItems;
+                        });
                 },
                 submit: function () {
                     axios.post('createOrder', this.order).then((response) => {
@@ -38,7 +35,13 @@
                     });
                 }
             }
+        });
 
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
         });
     });
 </script>
@@ -109,7 +112,7 @@
                                  alt="暂无">
                         </td>
                         <td class="ad-info">
-                            <a :href="'../products?pid=' + orderItem.product.id">{{ orderItem.product.name }}</a>
+                            <a :href="'../products?pid=' + orderItem.product.id">{{ orderItem.product.name | strFormat(0, 20) }}</a>
                             <img title="クレジットカード" src="../img/site/creditcard.png">
                         </td>
                         <td class="ji-column">

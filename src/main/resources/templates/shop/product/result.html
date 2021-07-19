@@ -53,6 +53,13 @@
                 },
             }
         });
+
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
+        });
     });
 </script>
 
@@ -76,7 +83,7 @@
                 <p class="jip-price"><span>￥</span>{{ product.promotePrice }}</p>
                 <p class="jip-title">
                     <a :href="'../products?pid=' + product.id">
-                        {{ product.name }}
+                        {{ product.name | strFormat(0, 15) }}
                     </a>
                 </p>
                 <p class="jip-info">

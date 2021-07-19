@@ -28,6 +28,11 @@ public class CategoryController {
         return categoryService.findAll(start, size, 5);
     }
 
+    @GetMapping("/categories/{id}")
+    public Category getOne(@PathVariable("id") Integer id) {
+        return categoryService.findById(id);
+    }
+
     @PostMapping("/categories")
     public void add(@RequestBody Category category) {
         categoryService.insert(category);

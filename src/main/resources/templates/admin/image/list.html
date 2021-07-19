@@ -23,6 +23,7 @@
             mounted: function () {
                 this.listSingleType();
                 this.listDetailType();
+                this.getProduct();
             },
             methods: {
                 // 商品写真
@@ -34,10 +35,6 @@
                         }
                     }).then((response) => {
                         vm.singleProductImages = response.data;
-                        if (response.data.length > 0) {
-                            vm.product = response.data[0].product;
-                            vm.category = response.data[0].product.category;
-                        }
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -51,12 +48,14 @@
                         }
                     }).then((response) => {
                         vm.detailProductImages = response.data;
-                        if (response.data.length > 0) {
-                            vm.product = response.data[0].product;
-                            vm.category = response.data[0].product.category;
-                        }
                     }).catch(function (error) {
                         console.log(error);
+                    });
+                },
+                getProduct: function () {
+                    axios.get(this.url + 'products/' + pid).then((response) => {
+                        vm.product = response.data
+                        vm.category = response.data.category;
                     });
                 },
                 // 写真追加/更新
@@ -95,6 +94,13 @@
                 }
             }
         });
+
+        // 文字の長さを
+        Vue.filter("strFormat", function (value, start, end) {
+            if (!value)
+                return '';
+            return value.substring(start, end);
+        });
     });
 </script>
 
@@ -113,7 +119,7 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="javascript:">
-                            {{ product.name }}
+                            {{ product.name | strFormat(0, 15) }}
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">商品写真管理</li>
