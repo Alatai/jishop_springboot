@@ -16,7 +16,6 @@
                 this.list(0);
             },
             methods: {
-                // 加载数据
                 list: function (start) {
                     axios.get(this.url, {
                         params: {
@@ -28,13 +27,12 @@
                         console.log(error);
                     });
                 },
-                // 控制跳转页面
                 goPage: function (num) {
                     if (num !== vm.pageResult.number) {
                         this.list(num);
                     }
                 },
-                // 发货
+                // 出荷
                 deliver: function (id) {
                     axios.put(this.url + "/" + id).then(() => {
                         this.list(0);
@@ -43,7 +41,7 @@
             }
         });
 
-        // 日期格式处理
+        // 日時フォーマット
         Vue.filter('formatDateFilter', function (dateValue, formatString) {
             if (null == dateValue) {
                 return "";

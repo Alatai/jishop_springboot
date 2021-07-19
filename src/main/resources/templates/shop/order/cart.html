@@ -21,8 +21,8 @@
                     axios.get(this.url).then((response) => {
                         vm.orderItems = response.data;
 
-                        // Vue是异步执行DOM更新的
-                        // nextTick里面的代码会在DOM更新后执行
+                        // Vueは非同期でDOMの更新を実行している
+                        // nextTick中のコードはDOMの更新した後に実行する
                         vm.$nextTick(() => {
                             handleCart();
                         });
@@ -32,7 +32,7 @@
         });
     });
 
-    // 购物车操作
+    // ショッピングカートの操作
     function handleCart() {
         // 削除
         $('.deleteItem').click(function () {

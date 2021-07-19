@@ -19,7 +19,7 @@
                 this.list(0);
             },
             methods: {
-                // 加载数据
+                // 非同期でデータを取得する
                 list: function (start) {
                     axios.get(this.url, {
                         params: {
@@ -31,13 +31,13 @@
                         console.log(error);
                     });
                 },
-                // 控制跳转页面
+                // パージナビコントロール
                 goPage: function (num) {
                     if (num !== vm.pageResult.number) {
                         this.list(num);
                     }
                 },
-                // 打开编辑模态框
+                // 編集モーダル
                 openEditModal: function (category) {
                     if (category) {
                         this.category = category;
@@ -45,31 +45,31 @@
 
                     $('#editModal').modal();
                 },
-                // 新增/更新数据
+                // 追加/更新
                 addOrUpdate: function () {
                     // 更新
                     if (this.category.id) {
                         axios.put(this.url, this.category).then(() => {
                             this.afterEdit();
                         });
-                    } else { // 新增
+                    } else { // 追加
                         axios.post(this.url, this.category).then(() => {
                             this.afterEdit();
                         });
                     }
                 },
-                // 新增/更新后执行
+                // 追加/更新の後実行する
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
                     vm.category = {};
                 },
-                // 打开删除模态框
+                // 削除モーダル
                 openDeleteModal: function (id) {
                     this.category.id = id;
                     $('#deleteModal').modal();
                 },
-                // 删除数据
+                // 削除
                 remove: function () {
                     axios.delete(this.url + "/" + this.category.id).then(() => {
                         $('#deleteModal').modal('hide');

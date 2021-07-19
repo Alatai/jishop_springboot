@@ -31,7 +31,6 @@
                         console.log(error);
                     });
                 },
-                // 更新
                 update: function (propertyValues) {
                     axios.post(this.url + '/pvalues',
                         propertyValues).then((response) => {
@@ -40,7 +39,6 @@
                         }
                     });
                 },
-                // 关闭确认模态框
                 closeConfirmModal: function () {
                     $('#confirmModal').modal('hide');
                 }
@@ -58,9 +56,9 @@
         <div class="bread-control">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">すべての分類</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{ category.name }}</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{ product.name }}</a></li>
+                    <li class="breadcrumb-item"><a href="categories">すべての分類</a></li>
+                    <li class="breadcrumb-item"><a :href="'products?cid=' + category.id">{{ category.name }}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:">{{ product.name }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">属性</li>
                 </ol>
             </nav>

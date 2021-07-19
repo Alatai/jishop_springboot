@@ -25,7 +25,7 @@
                 this.listDetailType();
             },
             methods: {
-                // 加载商品图片
+                // 商品写真
                 listSingleType: function () {
                     let url = this.url + 'products/' + pid + '/images';
                     axios.get(url, {
@@ -42,7 +42,7 @@
                         console.log(error);
                     });
                 },
-                // 加载商品详情图片
+                // 商品詳細写真
                 listDetailType: function () {
                     let url = this.url + 'products/' + pid + '/images';
                     axios.get(url, {
@@ -59,7 +59,7 @@
                         console.log(error);
                     });
                 },
-                // 新增商品/商品详情图片
+                // 写真追加/更新
                 add: function (type) {
                     let formData = new FormData();
 
@@ -78,7 +78,7 @@
                         vm.imageFile = {};
                     });
                 },
-                // 绑定上传文件到vue
+                // アップロードデータのバインディング
                 bandImageFile: function (event) {
                     this.imageFile = event.target.files[0];
                 },

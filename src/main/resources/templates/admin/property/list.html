@@ -33,13 +33,11 @@
                         console.log(error);
                     });
                 },
-                // 控制跳转页面
                 goPage: function (num) {
                     if (num !== vm.pageResult.number) {
                         this.list(num);
                     }
                 },
-                // 打开编辑模态框
                 openEditModal: function (property) {
                     if (property) {
                         this.property = property;
@@ -47,35 +45,30 @@
 
                     $('#editModal').modal();
                 },
-                // 新增/更新数据
                 addOrUpdate: function () {
                     this.property.category = this.category;
 
-                    // 更新
                     if (this.property.id) {
                         axios.put(this.url + 'properties',
                             this.property).then(() => {
                             this.afterEdit();
                         });
-                    } else { // 新增
+                    } else {
                         axios.post(this.url + 'properties',
                             this.property).then(() => {
                             this.afterEdit();
                         });
                     }
                 },
-                // 新增/更新后执行
                 afterEdit: function () {
                     $('#editModal').modal('hide');
                     vm.list(0);
                     vm.property = {};
                 },
-                // 打开删除模态框
                 openDeleteModal: function (id) {
                     this.property.id = id;
                     $('#deleteModal').modal();
                 },
-                // 删除数据
                 remove: function () {
                     axios.delete(this.url + 'properties/' +
                         this.property.id).then(() => {
