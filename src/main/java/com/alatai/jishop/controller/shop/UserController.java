@@ -35,7 +35,7 @@ public class UserController {
         boolean isExist = userService.isExist(name);
 
         if (isExist) {
-            return "fail";
+            return "ユーザネームは既に存在しています。";
         }
 
         userService.register(user);
@@ -59,7 +59,7 @@ public class UserController {
 
             return "success";
         } catch (AuthenticationException exp) {
-            return "fail";
+            return "ユーザネームとパスワードが間違っています。";
         }
     }
 

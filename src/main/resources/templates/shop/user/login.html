@@ -11,13 +11,21 @@
             el: '#login',
             data: {
                 url: 'user/login',
-                user: {}
+                user: {},
+                wrongPwd: false,
+                errorMsg: ''
             },
             methods: {
                 login: function () {
+                    vm.wrongPwd = false;
+
                     axios.post(this.url, this.user).then((response) => {
                         if (response.data === 'success') {
                             window.location.href = 'index';
+                        } else {
+                            vm.errorMsg = response.data;
+                            vm.wrongPwd = true;
+                            console.log(response.data);
                         }
                     });
                 }
@@ -33,7 +41,7 @@
     <div class="ji-login">
         <div class="jil-panel">
             <form>
-                <!--<div class="red-color">${msg}</div>-->
+                <div class="red-color" v-if="wrongPwd">{{ errorMsg }}</div>
 
                 <div style="text-align: center;">ユーザ登録</div>
 

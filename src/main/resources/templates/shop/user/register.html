@@ -7,27 +7,45 @@
 
 <script type="text/javascript">
     $(() => {
-        $(function () {
-            $('#registerForm').validate({
-                rules: {
-                    passwordConfirm: {
-                        equalTo: '#password'
-                    }
-                }
-            });
-        });
-
         let vm = new Vue({
             el: '#register',
             data: {
                 url: 'user/register',
-                user: {}
+                user: {},
+                isExist: false,
+                errorMsg: ''
             },
             methods: {
                 register: function () {
+                    vm.isExist = false;
+
+                    if (vm.user.name.length === 0) {
+                        vm.isExist = true;
+                        vm.errorMsg = 'ユーザネームを入力してください。';
+
+                        return;
+                    }
+
+                    if (vm.user.password.length === 0) {
+                        vm.isExist = true;
+                        vm.errorMsg = 'パスワードを入力してください。';
+
+                        return;
+                    }
+
+                    if (vm.user.password !== vm.user.repassword) {
+                        vm.isExist = true;
+                        vm.errorMsg = '同じパスワードを入力してください。';
+
+                        return;
+                    }
+
                     axios.post(this.url, this.user).then((response) => {
                         if (response.data === 'success') {
                             window.location.href = 'login';
+                        } else {
+                            vm.errorMsg = response.data;
+                            vm.isExist = true;
                         }
                     });
                 }
@@ -44,13 +62,15 @@
     <div class="ji-register">
         <div>
             <form id="registerForm">
+                <div style="text-align: center;padding-top: 50px;" class="red-color" v-if="isExist">{{ errorMsg }}</div>
+
                 <div style="margin-top: 50px" class="jir-msg">
                     ユーザネーム設定
                 </div>
                 <div>
                     <label for="name">ユーザネーム</label>
                     <input id="name" name="name" type="text" placeholder="ユーザネーム変更できない"
-                           v-model="user.name" required>
+                           v-model="user.name">
                 </div>
 
                 <div class="jir-msg">
@@ -61,13 +81,14 @@
                 <div>
                     <label for="password">パスワード</label>
                     <input id="password" name="password" type="text" placeholder="パスワード"
-                           v-model="user.password" required>
+                           v-model="user.password">
                 </div>
 
                 <div>
-                    <label for="passwordConfirm">パスワード確認</label>
-                    <input id="passwordConfirm" name="passwordConfirm"
-                           type="text" placeholder="パスワード確認">
+                    <label for="repassword">パスワード確認</label>
+                    <input id="repassword" name="repassword"
+                           type="text" placeholder="パスワード確認"
+                           v-model="user.repassword">
                 </div>
 
                 <div>
