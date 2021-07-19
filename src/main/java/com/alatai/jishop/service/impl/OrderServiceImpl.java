@@ -3,8 +3,11 @@ package com.alatai.jishop.service.impl;
 import com.alatai.jishop.dao.OrderDao;
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
+import com.alatai.jishop.entity.Product;
+import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.OrderItemService;
 import com.alatai.jishop.service.OrderService;
+import com.alatai.jishop.service.ProductService;
 import com.alatai.jishop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,10 +33,17 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
     @Autowired
     private OrderItemService orderItemService;
+    @Autowired
+    private ProductService productService;
 
     @Override
     public List<Order> findAll() {
         return orderDao.findAll();
+    }
+
+    @Override
+    public List<Order> findByUser(User user) {
+        return orderDao.findByUserAndStatusNot(user, DELETED);
     }
 
     @Override
@@ -81,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // 添加事务
-    @Transactional(propagation= Propagation.REQUIRED,rollbackForClassName="Exception")
+    @Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
     @Override
     public Order createOrder(Order order, List<OrderItem> orderItems) {
         String orderCode = UUID.randomUUID().toString().replace("-", "");
@@ -108,8 +118,41 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void hasPaid(Integer id) {
+    public Order pay(Order order) {
+        List<OrderItem> orderItems = orderItemService.findByOrder(order);
+        float amount = 0;
 
+        for (OrderItem orderItem : orderItems) {
+            amount += orderItem.getProduct().getPromotePrice() * orderItem.getNumber();
+        }
+
+        order.setAmount(amount);
+
+        return order;
+    }
+
+    @Override
+    public void hasPaid(Integer id) {
+        Order order = findById(id);
+        order.setStatus(WAIT_DELIVER);
+        order.setPaidDate(new Date());
+
+        // 在庫数更新
+        List<OrderItem> orderItems = orderItemService.findByOrder(order);
+
+        for (OrderItem orderItem : orderItems) {
+            Product product = orderItem.getProduct();
+
+            Integer stock = product.getStock();
+            stock -= orderItem.getNumber();
+
+            System.out.println("stock: " + stock);
+
+            product.setStock(stock);
+            productService.update(product);
+        }
+
+        update(order);
     }
 
     @Override
@@ -123,16 +166,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order confirmOrder(Integer id) {
-        return null;
+        Order order = findById(id);
+        order.setStatus(WAIT_REVIEW);
+        order.setConfirmedDate(new Date());
+
+        return update(order);
     }
 
     @Override
     public void deleteOrder(Integer id) {
+        Order order = findById(id);
+        order.setStatus(DELETED);
 
+        update(order);
     }
 
     @Override
     public void hasReviewed(Integer id) {
+        Order order = findById(id);
+        order.setStatus(FINISHED);
 
+        update(order);
     }
 }

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('jishop')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let vm = new Vue({
+            el: '#orders',
+            data: {
+                url: 'myorders',
+                orders: []
+            },
+            mounted: function () {
+                this.load();
+            },
+            methods: {
+                load: function () {
+                    axios.get(this.url).then((response) => {
+                        vm.orders = response.data;
+
+                        vm.$nextTick(() => {
+                            handleOrders();
+                        });
+                    });
+                },
+                confirmOrder: function (id) {
+                    axios.get('confirmOrder', {
+                        params: {
+                            id: id
+                        }
+                    }).then(() => {
+                        this.load();
+                    });
+                }
+            }
+        });
+
+        function handleOrders() {
+            // オーダーの状態を基にコントロール
+            $('a[data-status]').click(function () {
+                let status = $(this).data('status');
+
+                if (status === 'all') {
+                    $('table[data-status]').show();
+                } else {
+                    $('table[data-status]').hide();
+                    $('table[data-status="' + status + '"]').show();
+                }
+            });
+        }
+    });
+</script>
+
+<div id="orders">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- orders -->
+    <div class="ji-orders">
+        <div class="jio-type clear-fix">
+            <div class="jio-active"><a data-status="all" href="javascript:">すべて</a></div>
+            <div><a data-status="waitPay" href="javascript:">支払い待ち</a></div>
+            <div><a data-status="waitDelivery" href="javascript:">出荷待ち</a></div>
+            <div><a data-status="waitConfirm" href="javascript:">受け取り待ち</a></div>
+            <div><a data-status="waitReview" href="javascript:">評価待ち</a></div>
+            <div class="jio-last"></div>
+        </div>
+
+        <div class="jio-list">
+            <table class="jil-title">
+                <tbody>
+                <tr>
+                    <td>商品</td>
+                    <td style="width: 100px;">単価</td>
+                    <td style="width: 100px;">数</td>
+                    <td style="width: 120px;">金額</td>
+                    <td style="width: 100px;">状態</td>
+                    <td style="width: 100px;">操作</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="jio-item">
+            <table class="jio-table" :data-status="order.status" v-for="order in orders">
+                <tbody>
+                <tr class="jio-first">
+                    <td colspan="2">
+                        <span>{{ order.createdDate }}</span>
+                        <span>オーダーコード: {{ order.orderCode }}</span>
+                    </td>
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td class="jio-delete">
+                        <a href="delete?id=${order.id}"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+                <tr class="jio-info" v-for="orderItem, index in order.orderItems">
+                    <td style="width: 100px;" class="info-td">
+                        <img style="width: 80px; height: 80px;"
+                             :src="'../img/single/' + orderItem.product.firstImage.name"
+                             alt="写真なし">
+                    </td>
+                    <td class="info-td">
+                        <div class="jio-link">
+                            <a href="javascript:">{{ orderItem.product.name }}</a>
+                            <img title="クレジットカード支払い" src="../img/site/creditcard.png">
+                        </div>
+                    </td>
+                    <td style="width: 100px;" class="info-td">
+                        <div class="jio-op">￥{{ orderItem.product.originalPrice }}</div>
+                        <div class="jio-pp">￥{{ orderItem.product.promotePrice }}</div>
+                    </td>
+                    <td style="width: 100px; text-align: center;" class="info-td" rowspan="1">
+                        <span class="jio-num">{{ orderItem.number }}</span>
+                    </td>
+
+                    <template v-if="index == 0">
+                        <td style="width: 120px;" class="info-td info-part" :rowspan="order.orderItems.length">
+                            <div class="">￥{{ order.amount }}</div>
+                        </td>
+                        <td style="width: 100px;" class="info-td info-part" :rowspan="order.orderItems.length">
+                            {{ order.statusDesc }}
+                        </td>
+                        <td style="width: 100px;" class="info-td info-part" :rowspan="order.orderItems.length">
+                            <a :href="'../review/myreview?oid=' + order.id" v-if="order.status == 'waitReview'">
+                                <button>評価</button>
+                            </a>
+
+                            <a :href="'payment?id=' + order.id" v-if="order.status == 'waitPay'">
+                                <button>支払い</button>
+                            </a>
+
+                            <a href="javascript:" v-if="order.status == 'waitConfirm'">
+                                <button type="button" v-on:click="confirmOrder(order.id)">確認</button>
+                            </a>
+                        </td>
+                    </template>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+</body>
+</html>

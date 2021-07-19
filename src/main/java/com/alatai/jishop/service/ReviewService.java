@@ -2,6 +2,7 @@ package com.alatai.jishop.service;
 
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.Review;
+import com.alatai.jishop.entity.User;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ReviewService {
     void deleteById(Integer id);
 
     int getReviewCount(Product product);
+
+    void insertReviews(List<Review> reviews, User user);
 }

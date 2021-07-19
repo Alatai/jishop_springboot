@@ -7,17 +7,17 @@
 
         <span th:if="${session.user != null}">
             <a href="javascript:" th:text="|こんにちは、${session.user.name}|"></a>
-            <a href="http://localhost:8080/jishop/logout">ログアウト</a>
+            <a href="/jishop/logout">ログアウト</a>
         </span>
 
         <span th:if="${session.user == null}">
-            <a href="http://localhost:8080/jishop/register">新規登録</a>
-            <a href="http://localhost:8080/jishop/login">ログイン</a>
+            <a href="/jishop/register">新規登録</a>
+            <a href="/jishop/login">ログイン</a>
         </span>
 
         <span class="float-right">
-            <a href="http://localhost:8080/jishop/orders">注文履歴</a>
-            <a href="http://localhost:8080/jishop/order/mycart">
+            <a href="/jishop/order/orders">注文履歴</a>
+            <a href="/jishop/order/mycart">
                 <i class="fas fa-shopping-cart"></i>
                 <span>
                     カート <strong id="cartNum" th:text="${session.cartNum}"></strong> 件

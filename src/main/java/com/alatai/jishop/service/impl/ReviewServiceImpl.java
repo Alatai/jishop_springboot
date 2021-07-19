@@ -3,10 +3,12 @@ package com.alatai.jishop.service.impl;
 import com.alatai.jishop.dao.ReviewDao;
 import com.alatai.jishop.entity.Product;
 import com.alatai.jishop.entity.Review;
+import com.alatai.jishop.entity.User;
 import com.alatai.jishop.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,5 +55,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public int getReviewCount(Product product) {
         return reviewDao.countByProduct(product);
+    }
+
+    @Override
+    public void insertReviews(List<Review> reviews, User user) {
+        for (Review review : reviews) {
+            review.setUser(user);
+            review.setCreatedDate(new Date());
+
+            insert(review);
+        }
     }
 }

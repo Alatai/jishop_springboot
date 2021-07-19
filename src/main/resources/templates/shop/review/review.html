@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="common/shop/header::header('jishop')">
+</head>
+<body>
+
+<script type="text/javascript">
+    $(() => {
+        let oid = getUrlParams('oid');
+
+        let vm = new Vue({
+            el: '#reviews',
+            data: {
+                url: 'review',
+                oid: oid,
+                orderItems: []
+            },
+            mounted: function () {
+                this.load();
+            },
+            methods: {
+                load: function () {
+                    axios.get(this.url, {
+                        params: {
+                            oid: oid
+                        }
+                    }).then((response) => {
+                        console.log(response.data);
+                        vm.orderItems = response.data;
+
+                        vm.$nextTick(() => {
+                            handlerReviews();
+                        });
+                    })
+                }
+            }
+        });
+
+        function handlerReviews() {
+            $('#submitReviews').click(function () {
+                let data = [];
+
+                $('textarea[name="content"]').each(function () {
+                    let content = $(this).val();
+                    let pid = $(this).data('pid');
+                    let product = {
+                        id: pid
+                    };
+                    let oid = $(this).data('oid');
+                    data.push({
+                        'product': product,
+                        'oid': oid,
+                        'content': content
+                    })
+                });
+
+                axios.post('doreview', data).then((response) => {
+                    if (response.data === 'success') {
+                        location.href = '../order/orders';
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+
+<div id="reviews">
+    <!-- nav -->
+    <div th:replace="common/shop/navbar::navbar"></div>
+
+    <!-- review -->
+    <div class="ji-review">
+        <div class="jir-header clear-fix">
+            <h3>商品評価</h3>
+        </div>
+
+        <div class="jir-body clear-fix">
+            <ul>
+                <li class="clear-fix" v-for="orderItem in orderItems">
+                    <div class="jir-product">
+                        <a href="../product/detail?id=${orderItem.product.id}">
+                            <img style="width: 200px; height: 130px;"
+                                 :src="'../img/single/' + orderItem.product.firstImage.name"
+                                 alt="暂无图片">
+                        </a>
+                        <span style="position: relative; left: 100px;">{{ orderItem.product.name }}</span>
+                    </div>
+
+                    <div class="jir-main">
+                        <div class="jir-bcg">
+                            <label for=""></label>
+                            <textarea name="content" id="" :data-pid="orderItem.product.id" :data-oid="oid">
+                            </textarea>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="jir-submit">
+            <button id="submitReviews">評価提出</button>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="common/shop/footer::footer"></div>
+</div>
+
+
+</body>
+</html>

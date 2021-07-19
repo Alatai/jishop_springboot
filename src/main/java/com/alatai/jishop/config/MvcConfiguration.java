@@ -59,9 +59,12 @@ public class MvcConfiguration extends WebMvcConfigurationSupport {
         return new CartInterceptor();
     }
 
+    /**
+     * 拦截路径设置
+     */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/order/*");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/order/*").addPathPatterns("/review/*");
         registry.addInterceptor(cartInterceptor()).addPathPatterns("/**");
     }
 }

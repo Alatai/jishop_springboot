@@ -132,4 +132,37 @@ public class OrderController {
         return orderService.createOrder(order, orderItems);
     }
 
+    /**
+     * 支払いページデータ
+     */
+    @GetMapping("/pay")
+    public Order pay(Integer id) {
+        return orderService.pay(orderService.findById(id));
+    }
+
+    /**
+     * 既に支払っている、状態変更（waitDeliver）
+     */
+    @GetMapping("/paid")
+    public void paid(Integer id) {
+        orderService.hasPaid(id);
+    }
+
+    @GetMapping("/myorders")
+    public List<Order> orders(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        List<Order> orders = orderService.findByUser(user);
+        orderItemService.calculateAll(orders);
+
+        return orders;
+    }
+
+    /**
+     * オーダー確認完成、状態変更（waitReview）
+     */
+    @GetMapping("/confirmOrder")
+    public void confirmOrder(Integer id) {
+        orderService.confirmOrder(id);
+    }
 }

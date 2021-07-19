@@ -74,18 +74,21 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void calculate(Order order) {
-        List<OrderItem> items = findByOrder(order);
+        List<OrderItem> orderItems = findByOrder(order);
 
         float amount = 0f;
         int number = 0;
 
-        for (OrderItem item : items) {
-            amount += item.getNumber() * item.getProduct().getPromotePrice();
-            number += item.getNumber();
+        for (OrderItem orderItem : orderItems) {
+            amount += orderItem.getNumber() * orderItem.getProduct().getPromotePrice();
+            number += orderItem.getNumber();
+
+            productService.associateFirstImage(orderItem.getProduct());
         }
 
         order.setAmount(amount);
         order.setNumber(number);
+        order.setOrderItems(orderItems);
     }
 
     @Override

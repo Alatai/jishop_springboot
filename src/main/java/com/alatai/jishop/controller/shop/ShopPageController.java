@@ -88,8 +88,32 @@ public class ShopPageController {
     /**
      * 支付页面
      */
-    @GetMapping("/order/pay")
+    @GetMapping("/order/payment")
     public String pay() {
         return "shop/order/pay";
+    }
+
+    /**
+     * 完成支付页面
+     */
+    @GetMapping("/order/hasPaid")
+    public String hasPaid() {
+        return "shop/order/hasPaid";
+    }
+
+    /**
+     * 所有订单页面
+     */
+    @GetMapping("/order/orders")
+    public String orders() {
+        return "shop/order/orders";
+    }
+
+    /**
+     * 商品评价页面
+     */
+    @GetMapping("/review/myreview")
+    public String reviews() {
+        return "shop/review/review";
     }
 }

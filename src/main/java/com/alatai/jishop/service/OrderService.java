@@ -2,6 +2,7 @@ package com.alatai.jishop.service;
 
 import com.alatai.jishop.entity.Order;
 import com.alatai.jishop.entity.OrderItem;
+import com.alatai.jishop.entity.User;
 import com.alatai.jishop.util.PageResult;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface OrderService {
     String DELETED = "delete";
 
     List<Order> findAll();
+
+    List<Order> findByUser(User user);
 
     PageResult<Order> findAll(Integer start, Integer size, Integer displayPages);
 
@@ -43,6 +46,8 @@ public interface OrderService {
      * オーダーの生成、状態付け（waitPay）
      */
     Order createOrder(Order order, List<OrderItem> orderItems);
+
+    Order pay(Order order);
 
     /**
      * 支払い成功、状態変更（waitDeliver)

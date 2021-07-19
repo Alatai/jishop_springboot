@@ -33,7 +33,7 @@
                 submit: function () {
                     axios.post('createOrder', this.order).then((response) => {
                         if (response.data.id) {
-                            location.href = 'pay';
+                            location.href = 'payment?id=' + response.data.id;
                         }
                     });
                 }

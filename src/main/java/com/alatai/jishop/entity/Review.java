@@ -33,6 +33,9 @@ public class Review implements Serializable {
     @JoinColumn(name="pid")
     private Product product;
 
+    @Transient
+    private Integer oid;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +74,13 @@ public class Review implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Integer getOid() {
+        return oid;
+    }
+
+    public void setOid(Integer oid) {
+        this.oid = oid;
     }
 }
