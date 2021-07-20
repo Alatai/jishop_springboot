@@ -1,5 +1,6 @@
 package com.alatai.jishop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class ProductImage implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "pid")
+    @JsonBackReference // fix infinite recursion
     private Product product;
 
     public Integer getId() {

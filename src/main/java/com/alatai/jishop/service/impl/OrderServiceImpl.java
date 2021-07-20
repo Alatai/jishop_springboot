@@ -92,8 +92,8 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    // 添加事务
-    @Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
+    // Transaction
+    // @Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
     @Override
     public Order createOrder(Order order, List<OrderItem> orderItems) {
         String orderCode = UUID.randomUUID().toString().replace("-", "");
